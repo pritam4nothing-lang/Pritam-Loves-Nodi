@@ -195,7 +195,6 @@ button:disabled{background:#ffc0d4}
 .matter-card h3{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
-  margin-bottom:6px;
 }
 .matter-card p{
   font-size:14px;
@@ -318,12 +317,18 @@ button:disabled{background:#ffc0d4}
   <div class="envelope" onclick="openLetter()">
     <span>READ ME 💗</span>
   </div>
+
   <div class="letter" id="letter">
     <h3>Hey NODI 💗</h3>
     <p>
       I wanted to do something special today, simply because you matter to me.
       No pressure, no expectations — just something genuine from the heart.
     </p>
+    <p style="text-align:right;color:#ff5c8a;">Always ❤️</p>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button onclick="go(1)">⬅ Return to Start</button>
+    </div>
   </div>
 </section>
 
@@ -381,7 +386,7 @@ function toggleSong(){
   }
 }
 
-/* SLIDER */
+/* PHOTO SLIDER */
 let currentSlide=0;
 const slides=document.querySelectorAll(".slide");
 function nextSlide(){
