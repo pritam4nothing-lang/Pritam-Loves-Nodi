@@ -5,26 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Valentine For NODI 💗</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
 
-/* ===== BACKGROUND (IMAGE + OVERLAY + ANIMATION BASE) ===== */
+/* ===== BACKGROUND ===== */
 body{
   margin:0;
   min-height:100vh;
   font-family:Arial, sans-serif;
   text-align:center;
-
   background:
     linear-gradient(rgba(255,240,245,0.75), rgba(255,240,245,0.75)),
     url("bg.jpg");
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
-
   overflow-x:hidden;
 }
 
@@ -40,11 +37,11 @@ body{
   animation:fall linear infinite;
 }
 @keyframes fall{
-  from{transform:translateY(-10vh) translateX(0) rotate(0deg)}
-  to{transform:translateY(120vh) translateX(60px) rotate(360deg)}
+  from{transform:translateY(-10vh) rotate(0deg)}
+  to{transform:translateY(120vh) rotate(360deg)}
 }
 
-/* ===== COMMON ===== */
+/* ===== PAGE TRANSITION ===== */
 section{
   display:none;
   min-height:100vh;
@@ -52,23 +49,27 @@ section{
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  animation:fadeIn .7s ease;
 }
 section.active{display:flex}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(12px)}
+  to{opacity:1; transform:translateY(0)}
+}
 
-/* HEADINGS */
+/* ===== TEXT ===== */
 h1{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
   font-size:38px;
-  margin-bottom:10px;
 }
 .subtitle{
   font-size:14px;
-  color:#888;
+  color:#777;
   margin-bottom:20px;
 }
 
-/* BUTTON */
+/* ===== BUTTONS ===== */
 button{
   padding:12px 26px;
   border:none;
@@ -78,19 +79,38 @@ button{
   font-size:16px;
   cursor:pointer;
   margin:8px;
+  transition:.3s;
 }
-button:disabled{
-  background:#ffc0d4;
-  cursor:not-allowed;
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(255,92,138,.4);
+}
+button:active{transform:scale(.95)}
+button:disabled{background:#ffc0d4}
+
+/* Pulse CTA */
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,92,138,.6)}
+  70%{box-shadow:0 0 0 14px rgba(255,92,138,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,92,138,0)}
+}
+
+/* ===== GLASS CARDS ===== */
+.start-card,
+.player,
+.letter{
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
 }
 
 /* START */
 .start-card{
-  background:white;
   padding:40px;
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.12);
 }
+.start-card button{animation:pulse 2.5s infinite}
 
 /* GAME */
 .grid{
@@ -110,18 +130,12 @@ button:disabled{
   justify-content:center;
   cursor:pointer;
 }
-.card.done{
-  background:#ff5c8a;
-  cursor:default;
-}
+.card.done{background:#ff5c8a}
 
 /* MUSIC */
 .player{
-  background:#ffe4ec;
   padding:25px;
-  border-radius:20px;
   width:280px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 .song-title{
   font-family:'Playfair Display',serif;
@@ -139,18 +153,20 @@ button:disabled{
   cursor:pointer;
   box-shadow:0 15px 35px rgba(0,0,0,.18);
   overflow:hidden;
-  margin-top:20px;
+  transition:.4s;
 }
+.envelope:hover{transform:scale(1.05)}
 .envelope::before{
   content:"";
   position:absolute;
-  top:0;left:0;width:100%;height:100%;
+  inset:0;
   background:#ff9fbc;
   clip-path:polygon(0 0,100% 0,50% 55%);
 }
 .envelope span{
   position:absolute;
-  bottom:18px;left:50%;
+  bottom:18px;
+  left:50%;
   transform:translateX(-50%);
   font-family:'Dancing Script',cursive;
   font-size:22px;
@@ -160,11 +176,8 @@ button:disabled{
 /* LETTER */
 .letter{
   display:none;
-  background:white;
   max-width:520px;
   padding:30px;
-  border-radius:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,.2);
   margin-top:25px;
 }
 .letter h3{
@@ -229,25 +242,21 @@ button:disabled{
   </div>
 </section>
 
-<!-- PETALS GENERATOR -->
+<!-- PETALS -->
 <script>
 (function(){
-  const COUNT = 20;
-  for(let i=0;i<COUNT;i++){
+  for(let i=0;i<20;i++){
     const p=document.createElement("div");
     p.className="petal";
     p.style.left=Math.random()*100+"vw";
     p.style.animationDuration=(6+Math.random()*6)+"s";
-    p.style.animationDelay=(Math.random()*5)+"s";
-    p.style.opacity=0.4+Math.random()*0.6;
-    p.style.transform=`scale(${0.6+Math.random()})`;
+    p.style.opacity=.4+Math.random()*.6;
     document.body.appendChild(p);
   }
 })();
 </script>
 
 <script>
-/* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("p"+n).classList.add("active");
@@ -259,8 +268,7 @@ let first=null,lock=false,done=0;
 const grid=document.getElementById("grid");
 emojis.sort(()=>Math.random()-0.5).forEach(e=>{
   const c=document.createElement("div");
-  c.className="card";
-  c.textContent="❓";
+  c.className="card"; c.textContent="❓";
   c.onclick=()=>{
     if(lock||c.classList.contains("done")||c.textContent!=="❓")return;
     c.textContent=e;
@@ -270,10 +278,10 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
       if(first.textContent===c.textContent){
         first.classList.add("done"); c.classList.add("done");
         done+=2;
-        if(done===emojis.length) document.getElementById("gameNext").disabled=false;
+        if(done===emojis.length) gameNext.disabled=false;
         lock=false; first=null;
       }else{
-        setTimeout(()=>{ first.textContent="❓"; c.textContent="❓"; first=null; lock=false; },700);
+        setTimeout(()=>{first.textContent="❓";c.textContent="❓";first=null;lock=false;},700);
       }
     }
   };
@@ -284,13 +292,15 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
 const song=document.getElementById("song");
 const btn=document.getElementById("musicBtn");
 function toggleSong(){
-  if(song.paused){ song.play(); btn.textContent="⏸ Pause"; }
-  else{ song.pause(); btn.textContent="▶ Play"; }
+  if(song.paused){song.play();btn.textContent="⏸ Pause";}
+  else{song.pause();btn.textContent="▶ Play";}
 }
 
 /* LETTER */
 function openLetter(){
-  document.getElementById("letter").style.display="block";
+  const env=document.querySelector(".envelope");
+  env.style.transform="scale(.9)";
+  setTimeout(()=>document.getElementById("letter").style.display="block",400);
 }
 </script>
 
