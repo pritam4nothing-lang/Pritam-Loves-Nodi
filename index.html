@@ -40,7 +40,7 @@ button:disabled{
   cursor:not-allowed;
 }
 
-/* ---------- PAGE 1 ---------- */
+/* PAGE 1 */
 .soft-text{
   font-style:italic;
   color:#ff8fb1;
@@ -58,7 +58,7 @@ button:disabled{
   box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
-/* ---------- PAGE 2 GAME ---------- */
+/* GAME */
 .grid{
   display:grid;
   grid-template-columns:repeat(4,70px);
@@ -78,7 +78,7 @@ button:disabled{
 }
 .card.done{background:#ffc1d1}
 
-/* ---------- PAGE 3 MUSIC ---------- */
+/* MUSIC */
 .tape{
   width:260px;
   background:#ffe0e8;
@@ -99,7 +99,7 @@ button:disabled{
   margin:15px auto;
 }
 
-/* ---------- PAGE 4 PHOTOS ---------- */
+/* PHOTOS */
 .photos{
   display:flex;
   gap:20px;
@@ -112,12 +112,16 @@ button:disabled{
   width:180px;
   transform:rotate(-4deg);
   transition:.3s;
+  box-shadow:0 15px 25px rgba(0,0,0,.15);
 }
+.polaroid:nth-child(2){transform:rotate(4deg)}
+.polaroid:nth-child(3){transform:rotate(-2deg)}
+.polaroid:nth-child(4){transform:rotate(3deg)}
 .polaroid:hover{
   transform:scale(1.1) rotate(0deg);
 }
 
-/* ---------- PAGE 5 ENVELOPE ---------- */
+/* ENVELOPE */
 .envelope{
   width:220px;
   height:140px;
@@ -174,7 +178,7 @@ button:disabled{
 <section id="p3">
   <h1>Songs That Feel Like Valentine’s Day 🎶</h1>
   <div class="tape">
-    <h3>Waalian</h3>
+    <h3>Lag Jaa Gale</h3>
     <div class="play" onclick="audio.play()">▶</div>
   </div>
   <button onclick="go(4)">Next 💖</button>
@@ -187,6 +191,7 @@ button:disabled{
     <div class="polaroid"><img src="pic1.jpg" width="100%"></div>
     <div class="polaroid"><img src="pic2.jpg" width="100%"></div>
     <div class="polaroid"><img src="pic3.jpg" width="100%"></div>
+    <div class="polaroid"><img src="pic4.jpg" width="100%"></div>
   </div>
   <button onclick="go(5)">Next ✨</button>
 </section>
@@ -217,7 +222,7 @@ function go(n){
   document.getElementById('p'+n).classList.add('active');
 }
 
-/* GAME */
+/* GAME LOGIC */
 const icons=['💖','💖','🌸','🌸','💌','💌','✨','✨'];
 let sel=[],done=0;
 icons.sort(()=>Math.random()-0.5);
