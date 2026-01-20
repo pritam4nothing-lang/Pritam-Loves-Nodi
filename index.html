@@ -6,103 +6,146 @@
 <title>A Valentine For You 💖</title>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family: Arial, sans-serif;
-  background:#ffeef2;
+  font-family:'Segoe UI',sans-serif;
+  background:#fff1f4;
   text-align:center;
-  /* PAGE ANIMATION */
-section {
-  animation: fadeSlide 0.8s ease;
+  overflow-x:hidden;
 }
 
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* BUTTON PULSE */
-button:hover {
-  animation: pulse 0.6s;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.07); }
-  100% { transform: scale(1); }
-}
-
-/* IMAGE FLOAT */
-img {
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
-
-/* GAME CARD POP */
-.card:active {
-  transform: scale(0.9);
-}
-
-}
-
+/* COMMON */
 section{
   display:none;
   min-height:100vh;
+  padding:40px 20px;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  padding:20px;
 }
-
-section.active{
-  display:flex;
-}
-
+section.active{display:flex}
 button{
-  padding:12px 26px;
+  padding:12px 28px;
   border:none;
-  border-radius:25px;
-  background:#ff5f8f;
-  color:white;
+  border-radius:30px;
+  background:#ff5c8a;
+  color:#fff;
   font-size:16px;
-  margin-top:20px;
   cursor:pointer;
+  margin-top:20px;
+}
+button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
 
+/* ---------- PAGE 1 ---------- */
+.soft-text{
+  font-style:italic;
+  color:#ff8fb1;
+}
+.big-title{
+  font-size:42px;
+  color:#ff5c8a;
+}
+.glass{
+  margin-top:25px;
+  padding:30px 35px;
+  background:rgba(255,255,255,.6);
+  border-radius:25px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+}
+
+/* ---------- PAGE 2 GAME ---------- */
 .grid{
   display:grid;
   grid-template-columns:repeat(4,70px);
-  gap:12px;
-  margin-top:20px;
+  gap:15px;
+  margin:25px 0;
 }
-
 .card{
   width:70px;
   height:70px;
-  background:#ffc1d1;
+  background:#ff9eb5;
   border-radius:12px;
+  font-size:30px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
   cursor:pointer;
 }
+.card.done{background:#ffc1d1}
 
-img{
-  width:160px;
-  border-radius:15px;
-  margin:10px;
+/* ---------- PAGE 3 MUSIC ---------- */
+.tape{
+  width:260px;
+  background:#ffe0e8;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+.play{
+  width:55px;
+  height:55px;
+  background:#ff5c8a;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin:15px auto;
+}
+
+/* ---------- PAGE 4 PHOTOS ---------- */
+.photos{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.polaroid{
+  background:#fff;
+  padding:10px;
+  width:180px;
+  transform:rotate(-4deg);
+  transition:.3s;
+}
+.polaroid:hover{
+  transform:scale(1.1) rotate(0deg);
+}
+
+/* ---------- PAGE 5 ENVELOPE ---------- */
+.envelope{
+  width:220px;
+  height:140px;
+  background:#ffc1d1;
+  border-radius:10px;
+  position:relative;
+  cursor:pointer;
+}
+.flap{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:100%;
+  background:#ff9eb5;
+  clip-path:polygon(0 0,100% 0,50% 50%);
+  transition:.8s;
+}
+.open .flap{
+  transform:rotateX(180deg);
+  transform-origin:top;
+}
+.letter{
+  margin-top:30px;
+  max-width:600px;
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
 }
 </style>
 </head>
@@ -110,109 +153,101 @@ img{
 <body>
 
 <!-- PAGE 1 -->
-<section class="active">
-  <h1>A Valentine Note 💌</h1>
-  <p>Just because today feels right</p>
-  <button onclick="next()">Open 💖</button>
+<section class="active" id="p1">
+  <p class="soft-text">Hey, I have made something special for you…</p>
+  <h1 class="big-title">Will You Be My Valentine ? 💖</h1>
+  <div class="glass">
+    <p>A little reminder of what this day feels like with you.</p>
+    <button onclick="go(2)">Open This 💝</button>
+  </div>
 </section>
 
 <!-- PAGE 2 GAME -->
-<section>
+<section id="p2">
   <h1>Valentine Memory Match 💞</h1>
-  <p>Match the pairs</p>
+  <p>Match all pairs to continue</p>
   <div class="grid" id="grid"></div>
-  <button onclick="next()">Next 🎵</button>
+  <button id="gameNext" disabled onclick="go(3)">Next ✨</button>
 </section>
 
 <!-- PAGE 3 MUSIC -->
-<section>
+<section id="p3">
   <h1>Songs That Feel Like Valentine’s Day 🎶</h1>
-
-  <button onclick="playSong()">▶ Play Song</button>
-
-  <audio id="song">
-    <source src="song.mp3" type="audio/mpeg">
-    Your browser does not support audio
-  </audio>
-
-  <button onclick="next()">Next 💕</button>
+  <div class="tape">
+    <h3>Waalian</h3>
+    <div class="play" onclick="audio.play()">▶</div>
+  </div>
+  <button onclick="go(4)">Next 💖</button>
 </section>
 
 <!-- PAGE 4 PHOTOS -->
-<section>
-  <h1>Some Random Thoughts 💖</h1>
-
-  <img src="./pic1.jpg" loading="eager">
-  <img src="./pic2.jpg" loading="eager">
-  <img src="./pic3.jpg" loading="eager">
-  <img src="./pic4.jpg" loading="eager">
-
-  <button onclick="next()">Final ❤️</button>
+<section id="p4">
+  <h1>Some Random Thoughts 💗</h1>
+  <div class="photos">
+    <div class="polaroid"><img src="pic1.jpg" width="100%"></div>
+    <div class="polaroid"><img src="pic2.jpg" width="100%"></div>
+    <div class="polaroid"><img src="pic3.jpg" width="100%"></div>
+  </div>
+  <button onclick="go(5)">Next ✨</button>
 </section>
 
-<!-- PAGE 5 -->
-<section>
-  <h1>Always ❤️</h1>
-  <p>This came from a very genuine place.</p>
+<!-- PAGE 5 LETTER -->
+<section id="p5">
+  <h1>A Valentine Note 💌</h1>
+  <div class="envelope" onclick="openLetter()">
+    <div class="flap"></div>
+  </div>
+  <div class="letter" id="letter" style="display:none">
+    <h3>Hey NODI ❤️</h3>
+    <p>
+      I wanted to do something special today, simply because you matter to me.
+      Valentine’s Day isn’t about grand gestures —
+      it’s about choosing someone in the quiet moments.
+      No pressure. No expectations. Just something genuine.
+    </p>
+    <h4>Always 💖</h4>
+  </div>
 </section>
+
+<audio id="audio" src="song.mp3"></audio>
 
 <script>
-/* PAGE NAVIGATION */
-let page = 0;
-const sections = document.querySelectorAll("section");
-
-function next(){
-  sections[page].classList.remove("active");
-  page++;
-  if(page < sections.length){
-    sections[page].classList.add("active");
-  }
-}
-
-/* AUDIO */
-function playSong(){
-  const audio = document.getElementById("song");
-  audio.play();
+function go(n){
+  document.querySelector('section.active').classList.remove('active');
+  document.getElementById('p'+n).classList.add('active');
 }
 
 /* GAME */
-const emojis = ["💖","💖","💌","💌","🌸","🌸","❤️","❤️"];
-emojis.sort(() => Math.random() - 0.5);
-
-const grid = document.getElementById("grid");
-let firstCard = null;
-let lock = false;
-
-emojis.forEach(emoji => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.textContent = "❔";
-
-  card.addEventListener("click", () => {
-    if(lock || card.textContent !== "❔") return;
-
-    card.textContent = emoji;
-
-    if(!firstCard){
-      firstCard = card;
-    } else {
-      lock = true;
-      if(firstCard.textContent !== card.textContent){
-        setTimeout(() => {
-          firstCard.textContent = "❔";
-          card.textContent = "❔";
-          firstCard = null;
-          lock = false;
-        }, 700);
-      } else {
-        firstCard = null;
-        lock = false;
-      }
+const icons=['💖','💖','🌸','🌸','💌','💌','✨','✨'];
+let sel=[],done=0;
+icons.sort(()=>Math.random()-0.5);
+const grid=document.getElementById('grid');
+icons.forEach(i=>{
+  let d=document.createElement('div');
+  d.className='card';
+  d.onclick=()=>{
+    if(d.innerText||sel.length==2)return;
+    d.innerText=i;
+    sel.push(d);
+    if(sel.length==2){
+      setTimeout(()=>{
+        if(sel[0].innerText==sel[1].innerText){
+          sel.forEach(c=>c.classList.add('done'));
+          done++;
+          if(done==4)document.getElementById('gameNext').disabled=false;
+        }else sel.forEach(c=>c.innerText='');
+        sel=[];
+      },600);
     }
-  });
-
-  grid.appendChild(card);
+  };
+  grid.appendChild(d);
 });
+
+/* LETTER */
+function openLetter(){
+  document.querySelector('.envelope').classList.add('open');
+  setTimeout(()=>document.getElementById('letter').style.display='block',700);
+}
 </script>
 
 </body>
