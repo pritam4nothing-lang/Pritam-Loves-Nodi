@@ -88,17 +88,11 @@ button:hover{
 button:active{transform:scale(.95)}
 button:disabled{background:#ffc0d4}
 
-/* Pulse CTA */
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(255,92,138,.6)}
-  70%{box-shadow:0 0 0 14px rgba(255,92,138,0)}
-  100%{box-shadow:0 0 0 0 rgba(255,92,138,0)}
-}
-
 /* ===== GLASS CARDS ===== */
 .start-card,
 .player,
-.letter{
+.letter,
+.music-card{
   background:rgba(255,255,255,.78);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -107,10 +101,7 @@ button:disabled{background:#ffc0d4}
 }
 
 /* START */
-.start-card{
-  padding:40px;
-}
-.start-card button{animation:pulse 2.5s infinite}
+.start-card{padding:40px}
 
 /* GAME */
 .grid{
@@ -132,15 +123,60 @@ button:disabled{background:#ffc0d4}
 }
 .card.done{background:#ff5c8a}
 
-/* MUSIC */
-.player{
-  padding:25px;
+/* ===== MUSIC PLAYER ===== */
+.music-card{
+  padding:30px;
   width:280px;
 }
-.song-title{
+.cover{
+  width:180px;
+  height:180px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 6px #ffd6e5;
+}
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.cover.playing{
+  animation:spin 6s linear infinite;
+  box-shadow:0 0 25px rgba(255,92,138,.6);
+}
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+.song-name{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
   margin-bottom:15px;
+}
+
+/* ===== PHOTO SLIDER ===== */
+.slider{
+  width:260px;
+  height:340px;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+.slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transform:translateX(40px);
+  transition:.6s ease;
+}
+.slide.active{
+  opacity:1;
+  transform:translateX(0);
 }
 
 /* ENVELOPE */
@@ -153,9 +189,7 @@ button:disabled{background:#ffc0d4}
   cursor:pointer;
   box-shadow:0 15px 35px rgba(0,0,0,.18);
   overflow:hidden;
-  transition:.4s;
 }
-.envelope:hover{transform:scale(1.05)}
 .envelope::before{
   content:"";
   position:absolute;
@@ -216,8 +250,11 @@ button:disabled{background:#ffc0d4}
 <!-- PAGE 3 MUSIC -->
 <section id="p3">
   <h1>Songs That Feel Like Valentine’s Day 🎵</h1>
-  <div class="player">
-    <div class="song-title">Lag Jaa Gale</div>
+  <div class="music-card">
+    <div class="cover" id="cover">
+      <img src="music-cover.jpg">
+    </div>
+    <div class="song-name">Lag Jaa Gale</div>
     <audio id="song">
       <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -226,8 +263,21 @@ button:disabled{background:#ffc0d4}
   <button onclick="go(4)">Next 💖</button>
 </section>
 
-<!-- PAGE 4 LETTER -->
+<!-- PAGE 4 PHOTOS -->
 <section id="p4">
+  <h1>Some Random Thoughts 💗</h1>
+  <div class="slider" id="slider">
+    <img src="pic1.jpg" class="slide active">
+    <img src="pic2.jpg" class="slide">
+    <img src="pic3.jpg" class="slide">
+    <img src="pic4.jpg" class="slide">
+  </div>
+  <button onclick="nextSlide()">Swipe ➡</button>
+  <button onclick="go(5)">Next 💌</button>
+</section>
+
+<!-- PAGE 5 LETTER -->
+<section id="p5">
   <h1>A Valentine Note 💌</h1>
   <div class="envelope" onclick="openLetter()">
     <span>READ ME 💗</span>
@@ -238,25 +288,20 @@ button:disabled{background:#ffc0d4}
       I wanted to do something special today, simply because you matter to me.
       No pressure, no expectations — just something genuine from the heart.
     </p>
-    <p style="text-align:right;color:#ff5c8a;">Always ❤️</p>
   </div>
 </section>
 
-<!-- PETALS -->
 <script>
-(function(){
-  for(let i=0;i<20;i++){
-    const p=document.createElement("div");
-    p.className="petal";
-    p.style.left=Math.random()*100+"vw";
-    p.style.animationDuration=(6+Math.random()*6)+"s";
-    p.style.opacity=.4+Math.random()*.6;
-    document.body.appendChild(p);
-  }
-})();
-</script>
+/* PETALS */
+for(let i=0;i<20;i++){
+  const p=document.createElement("div");
+  p.className="petal";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(p);
+}
 
-<script>
+/* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("p"+n).classList.add("active");
@@ -289,18 +334,29 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
 });
 
 /* MUSIC */
-const song=document.getElementById("song");
-const btn=document.getElementById("musicBtn");
 function toggleSong(){
-  if(song.paused){song.play();btn.textContent="⏸ Pause";}
-  else{song.pause();btn.textContent="▶ Play";}
+  const song=document.getElementById("song");
+  const btn=document.getElementById("musicBtn");
+  const cover=document.getElementById("cover");
+  if(song.paused){
+    song.play(); btn.textContent="⏸ Pause"; cover.classList.add("playing");
+  }else{
+    song.pause(); btn.textContent="▶ Play"; cover.classList.remove("playing");
+  }
+}
+
+/* PHOTO SLIDER */
+let currentSlide=0;
+const slides=document.querySelectorAll(".slide");
+function nextSlide(){
+  slides[currentSlide].classList.remove("active");
+  currentSlide=(currentSlide+1)%slides.length;
+  slides[currentSlide].classList.add("active");
 }
 
 /* LETTER */
 function openLetter(){
-  const env=document.querySelector(".envelope");
-  env.style.transform="scale(.9)";
-  setTimeout(()=>document.getElementById("letter").style.display="block",400);
+  document.getElementById("letter").style.display="block";
 }
 </script>
 
