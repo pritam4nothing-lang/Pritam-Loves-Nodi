@@ -25,58 +25,25 @@ body{
   overflow-x:hidden;
 }
 
-/* Floating Hearts Background */
-.hearts {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
+/* ===== FLOATING HEARTS ===== */
+.hearts{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
 }
-
-.heart {
-  position: absolute;
-  color: rgba(255, 92, 138, 0.6);
-  font-size: 18px;
-  animation: floatHeart linear infinite;
+.heart{
+  position:absolute;
+  color:rgba(255,92,138,.6);
+  font-size:18px;
+  animation:floatHeart linear infinite;
 }
-
-@keyframes floatHeart {
-  0% {
-    transform: translateY(-10vh) scale(0.8) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(110vh) scale(1.3) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-.heart {
-  position: absolute;
-  color: rgba(255, 92, 138, 0.6);
-  font-size: 18px;
-  animation: floatHeart linear infinite;
-}
-
-@keyframes floatHeart {
-  0% {
-    transform: translateY(-10vh) scale(0.8) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(110vh) scale(1.3) rotate(360deg);
-    opacity: 0;
-  }
+@keyframes floatHeart{
+  0%{transform:translateY(-10vh) scale(.8) rotate(0);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(110vh) scale(1.3) rotate(360deg);opacity:0}
 }
 
 /* ===== PAGE TRANSITION ===== */
@@ -91,8 +58,8 @@ section{
 }
 section.active{display:flex}
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(12px)}
-  to{opacity:1; transform:translateY(0)}
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
 /* ===== TEXT ===== */
@@ -107,7 +74,7 @@ h1{
   margin-bottom:20px;
 }
 
-/* ===== BUTTONS ===== */
+/* ===== BUTTON ===== */
 button{
   padding:12px 26px;
   border:none;
@@ -117,13 +84,7 @@ button{
   font-size:16px;
   cursor:pointer;
   margin:8px;
-  transition:.3s;
 }
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(255,92,138,.4);
-}
-button:active{transform:scale(.95)}
 button:disabled{background:#ffc0d4}
 
 /* ===== GLASS CARDS ===== */
@@ -148,8 +109,7 @@ button:disabled{background:#ffc0d4}
   margin:25px 0;
 }
 .card{
-  width:70px;
-  height:70px;
+  width:70px;height:70px;
   background:#ffb6c1;
   border-radius:12px;
   font-size:28px;
@@ -160,95 +120,61 @@ button:disabled{background:#ffc0d4}
 }
 .card.done{background:#ff5c8a}
 
-/* ===== MUSIC PLAYER ===== */
-.music-card{
-  padding:30px;
-  width:280px;
-}
+/* MUSIC */
+.music-card{padding:30px;width:280px}
 .cover{
-  width:180px;
-  height:180px;
+  width:180px;height:180px;
   margin:0 auto 15px;
   border-radius:50%;
   overflow:hidden;
   box-shadow:0 0 0 6px #ffd6e5;
 }
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.cover img{width:100%;height:100%;object-fit:cover}
 .cover.playing{
   animation:spin 6s linear infinite;
   box-shadow:0 0 25px rgba(255,92,138,.6);
 }
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .song-name{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
   margin-bottom:15px;
 }
 
-/* ===== PHOTO SLIDER ===== */
+/* PHOTO SLIDER */
 .slider{
-  width:260px;
-  height:340px;
+  width:260px;height:340px;
   position:relative;
   overflow:hidden;
   border-radius:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 .slide{
   position:absolute;
   inset:0;
-  width:100%;
-  height:100%;
+  width:100%;height:100%;
   object-fit:cover;
   opacity:0;
   transform:translateX(40px);
   transition:.6s ease;
 }
-.slide.active{
-  opacity:1;
-  transform:translateX(0);
-}
+.slide.active{opacity:1;transform:translateX(0)}
 
-/* ===== WHY YOU MATTER ===== */
+/* WHY YOU MATTER */
 .matter-wrap{
   max-width:420px;
   display:flex;
   flex-direction:column;
   gap:18px;
 }
-.matter-card{
-  padding:22px;
-  transition:.35s;
-}
-.matter-card:hover{
-  transform:translateY(-6px) scale(1.02);
-}
-.matter-card h3{
-  font-family:'Playfair Display',serif;
-  color:#ff5c8a;
-}
-.matter-card p{
-  font-size:14px;
-  color:#555;
-}
+.matter-card{padding:22px}
 
 /* ENVELOPE */
 .envelope{
-  width:260px;
-  height:170px;
+  width:260px;height:170px;
   background:#ffc0d4;
   border-radius:14px;
   position:relative;
   cursor:pointer;
-  box-shadow:0 15px 35px rgba(0,0,0,.18);
-  overflow:hidden;
 }
 .envelope::before{
   content:"";
@@ -259,8 +185,7 @@ button:disabled{background:#ffc0d4}
 }
 .envelope span{
   position:absolute;
-  bottom:18px;
-  left:50%;
+  bottom:18px;left:50%;
   transform:translateX(-50%);
   font-family:'Dancing Script',cursive;
   font-size:22px;
@@ -274,26 +199,22 @@ button:disabled{background:#ffc0d4}
   padding:30px;
   margin-top:25px;
 }
-.letter h3{
-  font-family:'Playfair Display',serif;
-  color:#ff5c8a;
-}
 .letter p{
   font-family:'Dancing Script',cursive;
   font-size:18px;
-  line-height:1.7;
   color:#333;
-  text-align:left;
 }
 </style>
 </head>
 
 <body>
 
+<div class="hearts" id="hearts"></div>
+
 <!-- PAGE 1 -->
 <section class="active" id="p1">
   <div class="start-card">
-    <h1>Happy Valentine's Day Nodi💖</h1>
+    <h1>Happy Valentine's Day Nodi 💖</h1>
     <p class="subtitle">I made something special for you</p>
     <button onclick="go(2)">Open 💗</button>
   </div>
@@ -309,15 +230,11 @@ button:disabled{background:#ffc0d4}
 
 <!-- PAGE 3 MUSIC -->
 <section id="p3">
-  <h1>A Song That Hug Your Heart 🎵</h1>
+  <h1>A Song That Hugs Your Heart 🎵</h1>
   <div class="music-card">
-    <div class="cover" id="cover">
-      <img src="music-cover.jpg">
-    </div>
+    <div class="cover" id="cover"><img src="music-cover.jpg"></div>
     <div class="song-name">Lag Jaa Gale</div>
-    <audio id="song">
-      <source src="song.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="song"><source src="song.mp3"></audio>
     <button id="musicBtn" onclick="toggleSong()">▶ Play</button>
   </div>
   <button onclick="go(4)">Next 💖</button>
@@ -352,63 +269,33 @@ button:disabled{background:#ffc0d4}
 <!-- PAGE 6 LETTER -->
 <section id="p6">
   <h1>A Valentine Note 💌</h1>
-  <div class="envelope" onclick="openLetter()">
-    <span>Read Me 💗</span>
-  </div>
+  <div class="envelope" onclick="openLetter()"><span>Read Me 💗</span></div>
 
   <div class="letter" id="letter">
     <h3>Hey NODI 💗</h3>
-
-    <p>
-      This is our third Valentine’s Day together, and honestly,
-      I never imagined we would come this far — especially being miles apart.
-      Yet here we are, still choosing each other, every single day.
-    </p>
-
-    <p>
-      Long distance isn’t easy. There are moments when I wish
-      I could just sit beside you, talk without a screen,
-      and feel your presence instead of missing it.
-      But even with the distance, you somehow stay close to my heart.
-    </p>
-
-    <p>
-      What we share isn’t about being together all the time.
-      It’s about trust, patience, and holding on when things get quiet.
-      And that’s what makes us special to me.
-    </p>
-
-    <p>
-      Maybe one day this distance will turn into memories.
-      Until then, I’m thankful for every call, every message,
-      and every effort that keeps us going.
-    </p>
-
-    <p>
-      Happy Valentine’s Day, NODI.
-      Thank you for staying, for understanding,
-      and for being a part of my life.
-    </p>
-
-    <p style="text-align:right;color:#ff5c8a;">
-      Your Pritam,<br>❤️
-    </p>
-
-    <div style="text-align:center;margin-top:20px;">
-      <button onclick="go(1)">⬅ Return to Start</button>
-    </div>
+    <p>This is our third Valentine’s Day together, and honestly, I never imagined we would come this far — especially being miles apart.</p>
+    <p>Long distance isn’t easy, but even with the distance, you stay close to my heart.</p>
+    <p>What we share is trust, patience, and choosing each other every day.</p>
+    <p>Happy Valentine’s Day, NODI. Thank you for being part of my life.</p>
+    <p style="text-align:right;color:#ff5c8a;">Your Pritam ❤️</p>
+    <button onclick="go(1)">⬅ Return to Start</button>
   </div>
 </section>
 
 <script>
-/* PETALS */
-for(let i=0;i<20;i++){
-  const p=document.createElement("div");
-  p.className="petal";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(6+Math.random()*6)+"s";
-  document.body.appendChild(p);
+/* FLOATING HEARTS */
+const heartsContainer=document.getElementById("hearts");
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(14+Math.random()*16)+"px";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  heartsContainer.appendChild(h);
+  setTimeout(()=>h.remove(),12000);
 }
+setInterval(createHeart,350);
 
 /* NAV */
 function go(n){
@@ -422,7 +309,7 @@ let first=null,lock=false,done=0;
 const grid=document.getElementById("grid");
 emojis.sort(()=>Math.random()-0.5).forEach(e=>{
   const c=document.createElement("div");
-  c.className="card"; c.textContent="❓";
+  c.className="card";c.textContent="❓";
   c.onclick=()=>{
     if(lock||c.classList.contains("done")||c.textContent!=="❓")return;
     c.textContent=e;
@@ -430,12 +317,12 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
     else{
       lock=true;
       if(first.textContent===c.textContent){
-        first.classList.add("done"); c.classList.add("done");
+        first.classList.add("done");c.classList.add("done");
         done+=2;
         if(done===emojis.length) gameNext.disabled=false;
-        lock=false; first=null;
+        lock=false;first=null;
       }else{
-        setTimeout(()=>{first.textContent="❓";c.textContent="❓";first=null;lock=false;},700);
+        setTimeout(()=>{first.textContent="❓";c.textContent="❓";first=null;lock=false},700);
       }
     }
   };
@@ -448,9 +335,9 @@ function toggleSong(){
   const btn=document.getElementById("musicBtn");
   const cover=document.getElementById("cover");
   if(song.paused){
-    song.play(); btn.textContent="⏸ Pause"; cover.classList.add("playing");
+    song.play();btn.textContent="⏸ Pause";cover.classList.add("playing");
   }else{
-    song.pause(); btn.textContent="▶ Play"; cover.classList.remove("playing");
+    song.pause();btn.textContent="▶ Play";cover.classList.remove("playing");
   }
 }
 
