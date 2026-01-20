@@ -100,40 +100,40 @@ button:disabled{
   margin-bottom:15px;
 }
 
-/* PHOTO PAGE (NEW) */
-.photos{
-  display:flex;
-  gap:25px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.polaroid{
-  background:white;
-  padding:10px;
-  width:180px;
-  box-shadow:0 15px 25px rgba(0,0,0,.15);
-  transform:rotate(-4deg);
-  transition:.35s;
-}
-.polaroid:nth-child(2){transform:rotate(4deg)}
-.polaroid:nth-child(3){transform:rotate(-2deg)}
-.polaroid:nth-child(4){transform:rotate(3deg)}
-.polaroid:hover{
-  transform:scale(1.1) rotate(0deg);
-}
-.polaroid img{
-  width:100%;
-  border-radius:5px;
-}
-
-/* LETTER */
+/* ENVELOPE */
 .envelope{
   width:260px;
   height:170px;
   background:#ffc0d4;
-  border-radius:12px;
+  border-radius:14px;
+  position:relative;
   cursor:pointer;
+  box-shadow:0 15px 35px rgba(0,0,0,.18);
+  overflow:hidden;
+  margin-top:20px;
 }
+.envelope::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#ff9fbc;
+  clip-path:polygon(0 0,100% 0,50% 55%);
+}
+.envelope span{
+  position:absolute;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Dancing Script',cursive;
+  font-size:22px;
+  color:#ff3d6e;
+  letter-spacing:1px;
+}
+
+/* LETTER */
 .letter{
   display:none;
   background:white;
@@ -141,6 +141,7 @@ button:disabled{
   padding:30px;
   border-radius:20px;
   box-shadow:0 20px 40px rgba(0,0,0,.2);
+  margin-top:25px;
 }
 .letter h3{
   font-family:'Playfair Display',serif;
@@ -189,48 +190,34 @@ button:disabled{
     <button id="musicBtn" onclick="toggleSong()">▶ Play</button>
   </div>
 
-  <!-- CHANGED: now goes to photo page -->
-  <button onclick="go('pPhoto')">Next 💖</button>
+  <button onclick="go(4)">Next 💖</button>
 </section>
 
-<!-- PAGE 4 PHOTO (NEW) -->
-<section id="pPhoto">
-  <h1>Some Random Thoughts 💗</h1>
-
-  <div class="photos">
-    <div class="polaroid"><img src="pic1.jpg"></div>
-    <div class="polaroid"><img src="pic2.jpg"></div>
-    <div class="polaroid"><img src="pic3.jpg"></div>
-    <div class="polaroid"><img src="pic4.jpg"></div>
-  </div>
-
-  <button onclick="go(4)">Next 💌</button>
-</section>
-
-<!-- PAGE 5 LETTER -->
+<!-- PAGE 4 LETTER -->
 <section id="p4">
   <h1>A Valentine Note 💌</h1>
-  <div class="envelope" onclick="openLetter()"></div>
+
+  <div class="envelope" onclick="openLetter()">
+    <span>READ ME 💗</span>
+  </div>
 
   <div class="letter" id="letter">
     <h3>Hey NODI 💗</h3>
     <p>
       I wanted to do something special today, simply because you matter to me.
-      No pressure, no expectations—just something genuine from the heart.
+      Valentine’s Day isn’t about grand gestures, it’s about choosing someone,
+      even in the quiet moments.  
+      No pressure, no expectations — just something genuine from the heart.
     </p>
     <p style="text-align:right;color:#ff5c8a;">Always ❤️</p>
   </div>
 </section>
 
 <script>
-/* NAV (supports number + id) */
+/* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  if(typeof n === "number"){
-    document.getElementById("p"+n).classList.add("active");
-  }else{
-    document.getElementById(n).classList.add("active");
-  }
+  document.getElementById("p"+n).classList.add("active");
 }
 
 /* GAME */
@@ -272,6 +259,7 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
 /* MUSIC */
 const song=document.getElementById("song");
 const btn=document.getElementById("musicBtn");
+
 function toggleSong(){
   if(song.paused){
     song.play();
