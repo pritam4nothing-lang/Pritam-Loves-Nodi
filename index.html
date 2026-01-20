@@ -100,6 +100,32 @@ button:disabled{
   margin-bottom:15px;
 }
 
+/* PHOTO PAGE (NEW) */
+.photos{
+  display:flex;
+  gap:25px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.polaroid{
+  background:white;
+  padding:10px;
+  width:180px;
+  box-shadow:0 15px 25px rgba(0,0,0,.15);
+  transform:rotate(-4deg);
+  transition:.35s;
+}
+.polaroid:nth-child(2){transform:rotate(4deg)}
+.polaroid:nth-child(3){transform:rotate(-2deg)}
+.polaroid:nth-child(4){transform:rotate(3deg)}
+.polaroid:hover{
+  transform:scale(1.1) rotate(0deg);
+}
+.polaroid img{
+  width:100%;
+  border-radius:5px;
+}
+
 /* LETTER */
 .envelope{
   width:260px;
@@ -163,10 +189,25 @@ button:disabled{
     <button id="musicBtn" onclick="toggleSong()">▶ Play</button>
   </div>
 
-  <button onclick="go(4)">Next 💖</button>
+  <!-- CHANGED: now goes to photo page -->
+  <button onclick="go('pPhoto')">Next 💖</button>
 </section>
 
-<!-- PAGE 4 LETTER -->
+<!-- PAGE 4 PHOTO (NEW) -->
+<section id="pPhoto">
+  <h1>Some Random Thoughts 💗</h1>
+
+  <div class="photos">
+    <div class="polaroid"><img src="pic1.jpg"></div>
+    <div class="polaroid"><img src="pic2.jpg"></div>
+    <div class="polaroid"><img src="pic3.jpg"></div>
+    <div class="polaroid"><img src="pic4.jpg"></div>
+  </div>
+
+  <button onclick="go(4)">Next 💌</button>
+</section>
+
+<!-- PAGE 5 LETTER -->
 <section id="p4">
   <h1>A Valentine Note 💌</h1>
   <div class="envelope" onclick="openLetter()"></div>
@@ -182,10 +223,14 @@ button:disabled{
 </section>
 
 <script>
-/* NAV */
+/* NAV (supports number + id) */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById("p"+n).classList.add("active");
+  if(typeof n === "number"){
+    document.getElementById("p"+n).classList.add("active");
+  }else{
+    document.getElementById(n).classList.add("active");
+  }
 }
 
 /* GAME */
@@ -227,7 +272,6 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
 /* MUSIC */
 const song=document.getElementById("song");
 const btn=document.getElementById("musicBtn");
-
 function toggleSong(){
   if(song.paused){
     song.play();
