@@ -2,216 +2,155 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>A Valentine For You ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Valentine For You 💖</title>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#fff0f5;
-  color:#444;
-  overflow-x:hidden;
+  font-family: Arial, sans-serif;
+  background:#ffeef2;
+  text-align:center;
 }
-section{padding:60px 20px;min-height:100vh}
-h1,h2{text-align:center;color:#ff5c8a}
-p{text-align:center;max-width:700px;margin:10px auto}
-button{
-  background:#ff5c8a;
-  border:none;
-  padding:12px 26px;
-  border-radius:30px;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-}
-button:hover{opacity:.9}
 
-/* Loader */
-#loader{
-  position:fixed;inset:0;
-  background:#ffe4ec;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+section{
+  display:none;
+  min-height:100vh;
   justify-content:center;
-  z-index:999;
+  align-items:center;
+  flex-direction:column;
+  padding:20px;
 }
-.bar{
-  width:220px;height:10px;
-  background:#ffd1dc;
-  border-radius:20px;
-  overflow:hidden;
-}
-.bar span{
-  display:block;height:100%;
-  width:0;background:#ff5c8a;
-  animation:load 3s forwards;
-}
-@keyframes load{to{width:100%}}
 
-/* Envelope */
-.envelope{
-  width:260px;height:160px;
-  margin:40px auto;
-  background:#ffb6c1;
-  border-radius:12px;
-  position:relative;
+.active{display:flex;}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:#ff5f8f;
+  color:white;
+  font-size:16px;
+  margin-top:20px;
   cursor:pointer;
 }
-.envelope:before{
-  content:"";
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:linear-gradient(135deg,#ffc0cb 50%,transparent 50%);
-}
-.hidden{display:none}
 
-/* Cards */
-.card{
-  background:#fff;
-  border-radius:20px;
-  padding:30px;
-  margin:20px auto;
-  max-width:720px;
-  box-shadow:0 8px 20px rgba(0,0,0,.1);
-}
-
-/* Gallery */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:15px;
-}
-.gallery img{
-  width:100%;
-  border-radius:16px;
-}
-
-/* Game */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  max-width:420px;
-  margin:20px auto;
+  grid-template-columns:repeat(4,70px);
+  gap:10px;
 }
-.tile{
-  background:#ffb6c1;
+
+.card{
+  width:70px;
+  height:70px;
+  background:#ffc1d1;
   border-radius:12px;
-  padding:30px 0;
-  font-size:22px;
-  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
   cursor:pointer;
+}
+
+img{
+  width:150px;
+  border-radius:15px;
+  margin:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <h2>A Valentine Moment</h2>
-  <div class="bar"><span></span></div>
-</div>
-
-<!-- INTRO -->
-<section id="intro" class="hidden">
+<!-- PAGE 1 -->
+<section class="active">
   <h1>A Valentine Note 💌</h1>
-  <div class="envelope" onclick="openLetter()"></div>
-  <p>Click to open</p>
+  <button onclick="next()">Open 💖</button>
 </section>
 
-<!-- LETTER -->
-<section id="letter" class="hidden">
-  <div class="card">
-    <h2>Hey ❤️</h2>
-    <p>
-      I wanted to do something special today,  
-      not grand — just honest.  
-      This is a small reminder that you matter.
-    </p>
-    <p>
-      No pressure. No expectations.  
-      Just something sincere, from the heart.
-    </p>
-    <div style="text-align:center">
-      <button onclick="showSection('game')">Next ✨</button>
-    </div>
-  </div>
+<!-- PAGE 2 GAME -->
+<section>
+  <h1>Valentine Memory Match 💞</h1>
+  <div class="grid" id="grid"></div>
+  <button onclick="next()">Next 🎵</button>
 </section>
 
-<!-- GAME -->
-<section id="game" class="hidden">
-  <h1>Valentine Memory Match</h1>
-  <p>Just a little fun 💗</p>
-  <div class="grid">
-    <div class="tile">💖</div><div class="tile">💖</div>
-    <div class="tile">🌸</div><div class="tile">🌸</div>
-    <div class="tile">💌</div><div class="tile">💌</div>
-    <div class="tile">❤️</div><div class="tile">❤️</div>
-  </div>
-  <div style="text-align:center">
-    <button onclick="showSection('music')">Next 🎵</button>
-  </div>
-</section>
-
-<!-- MUSIC -->
-<section id="music" class="hidden">
+<!-- PAGE 3 MUSIC -->
+<section>
   <h1>Songs That Feel Like Valentine’s Day 🎶</h1>
-  <div class="card">
-    <p>Press play when you feel like it</p>
-    <audio controls style="width:100%">
-      <source src="song.mp3" type="audio/mpeg">
-    </audio>
-  </div>
-  <div style="text-align:center">
-    <button onclick="showSection('photos')">Next 🖼️</button>
-  </div>
+  <audio controls>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+  <button onclick="next()">Next 💕</button>
 </section>
 
-<!-- PHOTOS -->
-<section id="photos" class="hidden">
-  <h1>Some Random Thoughts</h1>
-  <div class="card gallery">
-    <img src="pic1.jpg">
-    <img src="pic2.jpg">
-    <img src="pic3.jpg">
-    <img src="pic4.jpg">
-  </div>
-  <div style="text-align:center">
-    <button onclick="showSection('final')">Final 💗</button>
-  </div>
+<!-- PAGE 4 PHOTOS -->
+<section>
+  <h1>Some Random Thoughts 💖</h1>
+  <img src="pic1.jpg">
+  <img src="pic2.jpg">
+  <img src="pic3.jpg">
+  <img src="pic4.jpg">
+  <button onclick="next()">Final ❤️</button>
 </section>
 
-<!-- FINAL -->
-<section id="final" class="hidden">
-  <div class="card">
-    <h2>One Last Thought</h2>
-    <p>
-      This wasn’t about perfection.  
-      Just honesty.  
-      I’m glad this moment exists.
-    </p>
-    <p>— Always 🤍</p>
-  </div>
+<!-- PAGE 5 -->
+<section>
+  <h1>Always ❤️</h1>
+  <p>This came from a very genuine place.</p>
 </section>
 
 <script>
-setTimeout(()=>{
-  document.getElementById('loader').style.display='none';
-  document.getElementById('intro').classList.remove('hidden');
-},3000);
+let page=0;
+const sections=document.querySelectorAll("section");
 
-function openLetter(){
-  showSection('letter');
+function next(){
+  sections[page].classList.remove("active");
+  page++;
+  if(page<sections.length){
+    sections[page].classList.add("active");
+  }
 }
-function showSection(id){
-  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
+
+/* GAME LOGIC */
+const emojis=["💖","💖","💌","💌","🌸","🌸","❤️","❤️"];
+emojis.sort(()=>Math.random()-0.5);
+
+const grid=document.getElementById("grid");
+let first=null;
+let lock=false;
+
+emojis.forEach(emoji=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.textContent="❔";
+
+  card.onclick=()=>{
+    if(lock || card.textContent!=="❔") return;
+
+    card.textContent=emoji;
+
+    if(!first){
+      first=card;
+    }else{
+      lock=true;
+      if(first.textContent!==card.textContent){
+        setTimeout(()=>{
+          first.textContent="❔";
+          card.textContent="❔";
+          first=null;
+          lock=false;
+        },700);
+      }else{
+        first=null;
+        lock=false;
+      }
+    }
+  };
+
+  grid.appendChild(card);
+});
 </script>
 
 </body>
