@@ -255,7 +255,7 @@ button:disabled{background:#ffc0d4}
 <!-- PAGE 1 -->
 <section class="active" id="p1">
   <div class="start-card">
-    <h1>Will You Be My Valentine 💖</h1>
+    <h1>Happy Valentine's Day Nodi💖</h1>
     <p class="subtitle">I made something special for you</p>
     <button onclick="go(2)">Open 💗</button>
   </div>
@@ -264,7 +264,7 @@ button:disabled{background:#ffc0d4}
 <!-- PAGE 2 GAME -->
 <section id="p2">
   <h1>Valentine Memory Match 💞</h1>
-  <p class="subtitle">Match all pairs to continue</p>
+  <p class="subtitle">Match all pairs of love to continue</p>
   <div class="grid" id="grid"></div>
   <button id="gameNext" disabled onclick="go(3)">Next 🎶</button>
 </section>
@@ -379,7 +379,7 @@ function go(n){
 }
 
 /* GAME */
-const emojis=["💗","🌸","💗","🌸","💖","✨","💖","✨"];
+const emojis=["💗","🌊","💗","🌊","💖","✨","💖","✨"];
 let first=null,lock=false,done=0;
 const grid=document.getElementById("grid");
 emojis.sort(()=>Math.random()-0.5).forEach(e=>{
