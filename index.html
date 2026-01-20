@@ -5,43 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Valentine For NODI 💗</title>
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
-
-/* ===== BACKGROUND ===== */
 body{
   margin:0;
-  min-height:100vh;
   font-family:Arial, sans-serif;
-  text-align:center;
   background:
-    linear-gradient(rgba(255,240,245,0.75), rgba(255,240,245,0.75)),
-    url("bg.jpg");
+    linear-gradient(rgba(255,240,245,.92),rgba(255,240,245,.92)),
+    url("bg.jpg"); /* ← background image */
   background-size:cover;
-  background-position:center;
   background-attachment:fixed;
-  overflow-x:hidden;
+  text-align:center;
 }
-
-/* Floating petals */
-.petal{
-  position:fixed;
-  top:-12%;
-  width:14px;
-  height:14px;
-  background:rgba(255,182,193,0.7);
-  border-radius:50%;
-  pointer-events:none;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  from{transform:translateY(-10vh) rotate(0deg)}
-  to{transform:translateY(120vh) rotate(360deg)}
-}
-
-/* PAGE TRANSITION */
 section{
   display:none;
   min-height:100vh;
@@ -49,19 +27,14 @@ section{
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  animation:fadeIn .7s ease;
 }
 section.active{display:flex}
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(12px)}
-  to{opacity:1; transform:translateY(0)}
-}
 
-/* TEXT */
+/* HEADINGS */
 h1{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
-  font-size:38px;
+  font-size:36px;
 }
 .subtitle{
   font-size:14px;
@@ -69,7 +42,7 @@ h1{
   margin-bottom:20px;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button{
   padding:12px 26px;
   border:none;
@@ -78,28 +51,20 @@ button{
   color:white;
   font-size:16px;
   cursor:pointer;
-  margin:8px;
-  transition:.3s;
+  margin:10px;
 }
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(255,92,138,.4);
-}
-button:active{transform:scale(.95)}
-button:disabled{background:#ffc0d4}
-
-/* GLASS CARDS */
-.start-card,
-.music-card,
-.letter{
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.15);
+button:disabled{
+  background:#ffc0d4;
+  cursor:not-allowed;
 }
 
 /* START */
-.start-card{padding:40px}
+.start-card{
+  background:white;
+  padding:40px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
 
 /* GAME */
 .grid{
@@ -109,117 +74,109 @@ button:disabled{background:#ffc0d4}
   margin:25px 0;
 }
 .card{
-  width:70px;
-  height:70px;
+  width:70px;height:70px;
   background:#ffb6c1;
-  border-radius:12px;
+  border-radius:14px;
   font-size:28px;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
 }
-.card.done{background:#ff5c8a}
+.card.done{
+  background:#ff5c8a;
+}
 
 /* MUSIC */
-.music-card{
-  padding:30px;
+.player{
+  background:#ffe4ec;
+  padding:25px;
+  border-radius:22px;
   width:280px;
+  box-shadow:0 15px 30px rgba(0,0,0,.18);
 }
-.cover{
-  width:180px;
-  height:180px;
-  margin:0 auto 15px;
-  border-radius:50%;
-  overflow:hidden;
-  box-shadow:0 0 0 6px #ffd6e5;
-}
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.cover.playing{
-  animation:spin 6s linear infinite;
-  box-shadow:0 0 25px rgba(255,92,138,.6);
-}
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-.song-name{
+.song-title{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
   margin-bottom:15px;
 }
 
-/* PHOTO SLIDER */
+/* PHOTO SWIPE */
 .slider{
   width:260px;
-  height:340px;
-  position:relative;
   overflow:hidden;
+}
+.slides{
+  display:flex;
+  transition:.5s;
+}
+.slides img{
+  width:260px;
   border-radius:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  margin-right:10px;
 }
-.slide{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transform:translateX(40px);
-  transition:.6s ease;
+
+/* WHY YOU MATTER */
+.why-wrap{
+  max-width:600px;
+  margin:30px auto;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
 }
-.slide.active{
-  opacity:1;
-  transform:translateX(0);
+.why-card{
+  background:#ffe4ec;
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  transition:.3s;
+}
+.why-card:hover{
+  transform:scale(1.03);
+}
+.why-card h3{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+}
+.why-card p{
+  font-size:14px;
+  color:#555;
 }
 
 /* ENVELOPE */
 .envelope{
-  width:260px;
-  height:170px;
+  width:260px;height:170px;
   background:#ffc0d4;
-  border-radius:14px;
+  border-radius:12px;
   position:relative;
   cursor:pointer;
-  box-shadow:0 15px 35px rgba(0,0,0,.18);
-  overflow:hidden;
 }
-.envelope::before{
+.envelope:before{
   content:"";
   position:absolute;
-  inset:0;
-  background:#ff9fbc;
-  clip-path:polygon(0 0,100% 0,50% 55%);
+  top:0;left:0;right:0;bottom:0;
+  clip-path:polygon(0 0,50% 50%,100% 0);
+  background:#ff9eb8;
 }
-.envelope span{
+.readme{
   position:absolute;
-  bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
+  bottom:12px;
+  width:100%;
   font-family:'Dancing Script',cursive;
+  color:#fff;
   font-size:22px;
-  color:#ff3d6e;
 }
-
-/* LETTER */
 .letter{
   display:none;
+  background:white;
   max-width:520px;
   padding:30px;
-  margin-top:25px;
-}
-.letter h3{
-  font-family:'Playfair Display',serif;
-  color:#ff5c8a;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 .letter p{
   font-family:'Dancing Script',cursive;
   font-size:18px;
-  line-height:1.7;
   color:#333;
   text-align:left;
 }
@@ -248,92 +205,64 @@ button:disabled{background:#ffc0d4}
 <!-- PAGE 3 MUSIC -->
 <section id="p3">
   <h1>Songs That Feel Like Valentine’s Day 🎵</h1>
-  <div class="music-card">
-    <div class="cover" id="cover">
-      <img src="music-cover.jpg">
-    </div>
-    <div class="song-name">Lag Jaa Gale</div>
+  <div class="player">
+    <div class="song-title">Lag Jaa Gale</div>
     <audio id="song">
       <source src="song.mp3" type="audio/mpeg">
     </audio>
-    <button id="musicBtn" onclick="toggleSong()">▶ Play</button>
+    <button onclick="toggleSong()" id="musicBtn">▶ Play</button>
   </div>
-  <button onclick="go(4)">Next 💖</button>
+  <button onclick="go(4)">Next 📸</button>
 </section>
 
 <!-- PAGE 4 PHOTOS -->
 <section id="p4">
-  <h1>Some Random Thoughts 💗</h1>
+  <h1>Our Moments 📷</h1>
   <div class="slider">
-    <img src="pic1.jpg" class="slide active">
-    <img src="pic2.jpg" class="slide">
-    <img src="pic3.jpg" class="slide">
-    <img src="pic4.jpg" class="slide">
+    <div class="slides" id="slides">
+      <img src="pic1.jpg">
+      <img src="pic2.jpg">
+      <img src="pic3.jpg">
+      <img src="pic4.jpg">
+    </div>
   </div>
-  <button onclick="nextSlide()">Swipe ➡</button>
-  <button onclick="go(5)">Next 💌</button>
+  <button onclick="nextPic()">Swipe ➡️</button>
+  <button onclick="go(5)">Next 💖</button>
 </section>
 
-<!-- PAGE 5 LETTER -->
+<!-- PAGE 5 WHY YOU MATTER -->
 <section id="p5">
+  <h1>Why You Matter 💗</h1>
+  <p class="subtitle">A glimpse into what makes you extraordinary</p>
+
+  <div class="why-wrap">
+    <div class="why-card"><h3>Genuine Heart</h3><p>You care in ways that feel real</p></div>
+    <div class="why-card"><h3>Calm Presence</h3><p>Being with you feels peaceful</p></div>
+    <div class="why-card"><h3>Kind Nature</h3><p>Your kindness shows naturally</p></div>
+    <div class="why-card"><h3>Soft Strength</h3><p>Gentle and emotionally steady</p></div>
+  </div>
+
+  <button onclick="go(6)">Next 💌</button>
+</section>
+
+<!-- PAGE 6 LETTER -->
+<section id="p6">
   <h1>A Valentine Note 💌</h1>
   <div class="envelope" onclick="openLetter()">
-    <span>READ ME 💗</span>
+    <div class="readme">READ ME</div>
   </div>
 
   <div class="letter" id="letter">
     <h3>Hey NODI 💗</h3>
-
     <p>
-      This is our third Valentine’s Day together,
-      and even though distance still stands between us,
-      my heart somehow feels closer to you every year.
+      I wanted to do something special today, simply because you matter to me.
+      No pressure. No expectations. Just something genuine, from the heart.
     </p>
-
-    <p>
-      Loving you from afar hasn’t been easy.
-      There are days I wish I could hold your hand,
-      sit beside you in silence,
-      and let the world slow down for a moment.
-    </p>
-
-    <p>
-      But what we have is real —
-      the late-night talks, the missed calls,
-      the patience, the trust.
-      All of it means more to me than I ever say.
-    </p>
-
-    <p>
-      Distance didn’t weaken us,
-      it taught us how deeply we care.
-      And if loving you means waiting,
-      then I’ll wait — happily.
-    </p>
-
-    <p style="text-align:center; font-weight:bold; color:#ff5c8a;">
-      You are worth every mile, every wait, every heartbeat.
-    </p>
-
-    <p style="text-align:right; color:#ff5c8a;">
-      Always yours ❤️
-    </p>
+    <p style="text-align:right;color:#ff5c8a;">Always ❤️</p>
   </div>
-
-  <button onclick="restart()">Restart 💞</button>
 </section>
 
 <script>
-/* PETALS */
-for(let i=0;i<20;i++){
-  const p=document.createElement("div");
-  p.className="petal";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(6+Math.random()*6)+"s";
-  document.body.appendChild(p);
-}
-
-/* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("p"+n).classList.add("active");
@@ -345,7 +274,8 @@ let first=null,lock=false,done=0;
 const grid=document.getElementById("grid");
 emojis.sort(()=>Math.random()-0.5).forEach(e=>{
   const c=document.createElement("div");
-  c.className="card"; c.textContent="❓";
+  c.className="card";
+  c.textContent="❓";
   c.onclick=()=>{
     if(lock||c.classList.contains("done")||c.textContent!=="❓")return;
     c.textContent=e;
@@ -353,12 +283,18 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
     else{
       lock=true;
       if(first.textContent===c.textContent){
-        first.classList.add("done"); c.classList.add("done");
+        first.classList.add("done");
+        c.classList.add("done");
         done+=2;
-        if(done===emojis.length) gameNext.disabled=false;
-        lock=false; first=null;
+        if(done===emojis.length)
+          document.getElementById("gameNext").disabled=false;
+        lock=false;first=null;
       }else{
-        setTimeout(()=>{first.textContent="❓";c.textContent="❓";first=null;lock=false;},700);
+        setTimeout(()=>{
+          first.textContent="❓";
+          c.textContent="❓";
+          first=null;lock=false;
+        },700);
       }
     }
   };
@@ -366,44 +302,23 @@ emojis.sort(()=>Math.random()-0.5).forEach(e=>{
 });
 
 /* MUSIC */
+const song=document.getElementById("song");
+const btn=document.getElementById("musicBtn");
 function toggleSong(){
-  const song=document.getElementById("song");
-  const btn=document.getElementById("musicBtn");
-  const cover=document.getElementById("cover");
-  if(song.paused){
-    song.play(); btn.textContent="⏸ Pause"; cover.classList.add("playing");
-  }else{
-    song.pause(); btn.textContent="▶ Play"; cover.classList.remove("playing");
-  }
+  if(song.paused){song.play();btn.textContent="⏸ Pause";}
+  else{song.pause();btn.textContent="▶ Play";}
 }
 
-/* PHOTO SLIDER */
-let currentSlide=0;
-const slides=document.querySelectorAll(".slide");
-function nextSlide(){
-  slides[currentSlide].classList.remove("active");
-  currentSlide=(currentSlide+1)%slides.length;
-  slides[currentSlide].classList.add("active");
+/* PHOTO SWIPE */
+let index=0;
+function nextPic(){
+  index=(index+1)%4;
+  document.getElementById("slides").style.transform=`translateX(-${index*270}px)`;
 }
 
 /* LETTER */
 function openLetter(){
   document.getElementById("letter").style.display="block";
-}
-
-/* RESTART */
-function restart(){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById("p1").classList.add("active");
-
-  document.getElementById("letter").style.display="none";
-
-  const song=document.getElementById("song");
-  if(song){song.pause(); song.currentTime=0;}
-
-  slides.forEach(s=>s.classList.remove("active"));
-  slides[0].classList.add("active");
-  currentSlide=0;
 }
 </script>
 
