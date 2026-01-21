@@ -477,7 +477,7 @@ Your Pritam ❤️
 </p>
 
 <div style="text-align:center; margin-top:20px;">
-  <button onclick="go(1)">⬅ Return to Start</button>
+  <button onclick="resetAll()">⬅ Return to Start</button>
 </div>
 </section>
 
@@ -558,6 +558,44 @@ function openLetter(){
     card.classList.add("revealed");
   });
 });
+function resetAll(){
+
+  // 1️⃣ Letter hide
+  const letter = document.getElementById("letter");
+  if(letter) letter.style.display = "none";
+
+  // 2️⃣ Music stop + reset
+  const song = document.getElementById("song");
+  const cover = document.getElementById("cover");
+  const btn = document.getElementById("musicBtn");
+  if(song){
+    song.pause();
+    song.currentTime = 0;
+  }
+  if(cover) cover.classList.remove("playing");
+  if(btn) btn.innerText = "▶ Play";
+
+  // 3️⃣ Game reset
+  document.querySelectorAll(".card").forEach(card=>{
+    card.classList.remove("done");
+    card.innerText = "❓";
+  });
+
+  // 4️⃣ Why you matter cards reset
+  document.querySelectorAll(".tap-card").forEach(card=>{
+    card.classList.remove("revealed");
+  });
+
+  // 5️⃣ Photo slider reset
+  const slides = document.querySelectorAll(".slide");
+  slides.forEach(s=>s.classList.remove("active"));
+  if(slides[0]) slides[0].classList.add("active");
+  currentSlide = 0;
+
+  // 6️⃣ Go back to start
+  go(1);
+}
+  
 </script>
 
 </body>
