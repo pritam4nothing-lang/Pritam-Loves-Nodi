@@ -446,24 +446,33 @@ setInterval(()=>{
 },350);
 
 /* GAME */
-const emojis=["💗","🌊","💗","🌊","💖","✨","💖","✨"];
+const images = [
+  "a1.jpg","a2.jpg",
+  "b1.jpg","b2.jpg",
+  "c1.jpg","c2.jpg",
+  "d1.jpg","d2.jpg"
+];
 let first=null,lock=false,done=0;
 const grid=document.getElementById("grid");
 const gameNext=document.getElementById("gameNext");
-emojis.sort(()=>Math.random()-0.5).forEach(e=>{
+images.sort(()=>Math.random()-0.5).forEach(img=>{
   const c=document.createElement("div");
-  c.className="card";c.textContent="❓";
+  c.className="card";
+  c.dataset.img = img;
+  c.textContent = "❓";
   c.onclick=()=>{
     if(lock||c.classList.contains("done")||c.textContent!=="❓")return;
-    c.textContent=e;
+    c.innerHTML = `<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
     if(!first)first=c;
     else{
       lock=true;
-      if(first.textContent===c.textContent){
+     if(first.dataset.img[0] === c.dataset.img[0]){
         first.classList.add("done");c.classList.add("done");
         done+=2;if(done===emojis.length)gameNext.disabled=false;
         first=null;lock=false;
-      }else setTimeout(()=>{first.textContent=c.textContent="❓";first=null;lock=false},700);
+      }else setTimeout(()=>{
+  first.innerHTML="❓";
+  c.innerHTML="❓";lock=false},700);
     }
   };
   grid.appendChild(c);
