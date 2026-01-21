@@ -10,73 +10,217 @@
 <style>
 *{box-sizing:border-box}
 
+/* BACKGROUND */
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  background:
+    linear-gradient(rgba(255,240,245,.75),rgba(255,240,245,.75)),
+    url("bg.jpg");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+
 /* FLOATING HEARTS */
-.hearts{position:fixed;inset:0;pointer-events:none;z-index:0}
-.heart{position:absolute;color:rgba(255,92,138,.6);font-size:18px;animation:floatHeart linear infinite}
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+.heart{
+  position:absolute;
+  color:rgba(255,92,138,.6);
+  animation:floatHeart linear infinite;
+}
 @keyframes floatHeart{
   0%{transform:translateY(-10vh) scale(.8);opacity:0}
   10%{opacity:1}
   100%{transform:translateY(110vh) scale(1.3);opacity:0}
 }
 
-body{
-  margin:0;min-height:100vh;font-family:Arial,sans-serif;text-align:center;
-  background:linear-gradient(rgba(255,240,245,.75),rgba(255,240,245,.75)),url("bg.jpg");
-  background-size:cover;background-position:center;background-attachment:fixed;
-  overflow-x:hidden
-}
-
+/* SECTIONS */
 section{
-  display:none;min-height:100vh;padding:40px 20px;
-  justify-content:center;align-items:center;flex-direction:column
+  display:none;
+  min-height:100vh;
+  padding:40px 20px;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
 }
 section.active{display:flex}
 
-h1{font-family:'Playfair Display',serif;color:#ff5c8a;font-size:38px}
-.subtitle{font-size:14px;color:#777;margin-bottom:20px}
+/* TEXT */
+h1{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+  font-size:38px;
+}
+.subtitle{
+  font-size:14px;
+  color:#777;
+  margin-bottom:20px;
+}
 
+/* BUTTON */
 button{
-  padding:12px 26px;border:none;border-radius:25px;
-  background:#ff5c8a;color:white;font-size:16px;cursor:pointer;margin:8px
+  padding:12px 26px;
+  border:none;
+  border-radius:25px;
+  background:#ff5c8a;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin:8px;
 }
 button:disabled{background:#ffc0d4}
 
+/* START CARD */
+.start-card{
+  background:rgba(255,255,255,.85);
+  padding:45px 35px;
+  border-radius:28px;
+  box-shadow:0 25px 60px rgba(255,92,138,.25);
+}
+
+/* GAME */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,70px);
+  gap:12px;
+  margin:25px 0;
+}
+.card{
+  width:70px;
+  height:70px;
+  background:#ffb6c1;
+  border-radius:12px;
+  font-size:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.card.done{background:#ff5c8a}
+
 /* MUSIC */
-.music-card{padding:35px 30px;width:280px;border-radius:28px;background:white}
+.music-card{
+  background:rgba(255,255,255,.85);
+  padding:30px;
+  border-radius:28px;
+  width:280px;
+}
 .cover{
-  width:180px;height:180px;margin:0 auto 15px;border-radius:50%;
-  overflow:hidden;box-shadow:0 0 0 6px #ffd6e5
+  width:180px;
+  height:180px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 6px #ffd6e5;
 }
 .cover img{width:100%;height:100%;object-fit:cover}
 .cover.playing{animation:spin 6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.song-name{font-family:'Playfair Display',serif;color:#ff5c8a;margin-bottom:15px}
-
-/* GAME */
-.grid{display:grid;grid-template-columns:repeat(4,70px);gap:12px;margin:25px 0}
-.card{
-  width:70px;height:70px;background:#ffb6c1;border-radius:12px;
-  font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer
+.song-name{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+  margin-bottom:15px;
 }
-.card.done{background:#ff5c8a}
 
-/* TAP CARDS */
-.tap-card{position:relative;overflow:hidden;cursor:pointer}
-.card-content{opacity:0;transform:translateY(20px);transition:.6s}
+/* SLIDER */
+.slider{
+  width:260px;
+  height:340px;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:.6s;
+}
+.slide.active{opacity:1}
+
+/* WHY YOU MATTER */
+.tap-card{
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  background:rgba(255,255,255,.85);
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:18px;
+}
 .card-cover{
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   background:linear-gradient(135deg,#ff5c8a,#ff8fb1);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Dancing Script',cursive;font-size:22px;color:white;
-  transition:.6s
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Dancing Script',cursive;
+  font-size:22px;
+  color:white;
 }
-.tap-card.revealed .card-cover{transform:translateY(-110%);opacity:0}
-.tap-card.revealed .card-content{opacity:1;transform:none}
+.card-content{
+  opacity:0;
+  transition:.6s;
+}
+.tap-card.revealed .card-cover{opacity:0}
+.tap-card.revealed .card-content{opacity:1}
 
-/* LETTER (UNCHANGED) */
-.letter{display:none;max-width:520px;padding:30px;margin-top:25px}
-.letter h3{font-family:'Dancing Script',cursive;color:#ff5c8a;font-size:28px}
-.letter p{font-family:'Dancing Script',cursive;font-size:18px;color:#333}
+/* LETTER */
+.envelope{
+  width:260px;
+  height:170px;
+  background:#ffc0d4;
+  border-radius:14px;
+  position:relative;
+}
+.stamp{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#ff5c8a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Dancing Script',cursive;
+  color:white;
+  cursor:pointer;
+}
+.letter{
+  display:none;
+  max-width:520px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  margin-top:25px;
+}
+.letter h3{
+  font-family:'Dancing Script',cursive;
+  color:#ff5c8a;
+  font-size:28px;
+}
+.letter p{
+  font-family:'Dancing Script',cursive;
+  font-size:18px;
+  color:#333;
+  text-align:left;
+}
 </style>
 </head>
 
@@ -84,30 +228,91 @@ button:disabled{background:#ffc0d4}
 
 <div class="hearts" id="hearts"></div>
 
+<!-- PAGE 1 -->
 <section class="active" id="p1">
-  <h1>Happy Valentine's Day Nodi 💖</h1>
-  <button onclick="go(2)">Open 💗</button>
+  <div class="start-card">
+    <h1>Happy Valentine’s Day NODI 💖</h1>
+    <p class="subtitle">I made something special for you</p>
+    <button onclick="go(2)">Open 💗</button>
+  </div>
 </section>
 
+<!-- PAGE 2 GAME -->
 <section id="p2">
   <h1>Valentine Memory Match 💞</h1>
   <div class="grid" id="grid"></div>
   <button id="gameNext" disabled onclick="go('SongChoice')">Next 🎶</button>
 </section>
 
+<!-- SONG CHOICE -->
 <section id="pSongChoice">
   <h1>Play the Song 💗</h1>
   <button onclick="chooseSong('hug')">If you want to hug me 🤗</button>
   <button onclick="chooseSong('kiss')">If you want to kiss me 💋</button>
 </section>
 
+<!-- MUSIC -->
 <section id="p3">
   <h1>A Song That Hugs Your Heart 🎵</h1>
   <div class="music-card">
-    <div class="cover" id="cover"><img src="music-cover.jpg"></div>
+    <div class="cover" id="cover">
+      <img src="music-cover.jpg">
+    </div>
     <div class="song-name">Lag Jaa Gale</div>
     <audio id="song" src="song.mp3"></audio>
     <button onclick="toggleSong()">▶ Play</button>
+  </div>
+  <button onclick="go(4)">Next 💖</button>
+</section>
+
+<!-- PHOTOS -->
+<section id="p4">
+  <h1>Little moments that quietly became precious 💗</h1>
+  <div class="slider">
+    <img src="pic1.jpg" class="slide active">
+    <img src="pic2.jpg" class="slide">
+    <img src="pic3.jpg" class="slide">
+    <img src="pic4.jpg" class="slide">
+  </div>
+  <button onclick="nextSlide()">Swipe ➡</button>
+  <button onclick="go(5)">Next ✨</button>
+</section>
+
+<!-- WHY YOU MATTER -->
+<section id="p5">
+  <h1>Why Are You So Special 💗</h1>
+
+  <div class="tap-card">
+    <div class="card-cover">Tap 💝</div>
+    <div class="card-content"><h3>Genuine Heart 💞</h3><p>You care in ways that feel real.</p></div>
+  </div>
+
+  <div class="tap-card">
+    <div class="card-cover">Tap 💝</div>
+    <div class="card-content"><h3>Calm Presence 🌸</h3><p>Being with you feels peaceful.</p></div>
+  </div>
+
+  <div class="tap-card">
+    <div class="card-cover">Tap 💝</div>
+    <div class="card-content"><h3>Kind Nature ✨</h3><p>Your kindness is effortless.</p></div>
+  </div>
+
+  <button onclick="go(6)">Next 💌</button>
+</section>
+
+<!-- LETTER -->
+<section id="p6">
+  <h1>A Valentine Note 💌</h1>
+  <div class="envelope">
+    <div class="stamp" onclick="openLetter()">Read Me 💗</div>
+  </div>
+
+  <div class="letter" id="letter">
+    <!-- 🔒 LETTER CONTENT UNCHANGED -->
+    <h3>Hey NODI 💗</h3>
+    <p>This is our third Valentine’s Day together...</p>
+    <p style="text-align:right;color:#ff5c8a;">Your Pritam ❤️</p>
+    <button onclick="resetAll()">⬅ Return to Start</button>
   </div>
 </section>
 
@@ -119,16 +324,16 @@ function go(n){
   else document.getElementById("p"+n).classList.add("active");
 }
 
-/* FLOATING HEARTS */
-const heartsContainer=document.getElementById("hearts");
+/* HEARTS */
+const hc=document.getElementById("hearts");
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
-  h.innerHTML="❤";
+  h.textContent="❤";
   h.style.left=Math.random()*100+"vw";
   h.style.fontSize=(14+Math.random()*16)+"px";
   h.style.animationDuration=(6+Math.random()*6)+"s";
-  heartsContainer.appendChild(h);
+  hc.appendChild(h);
   setTimeout(()=>h.remove(),12000);
 },350);
 
@@ -162,12 +367,10 @@ function toggleSong(){
   const c=document.getElementById("cover");
   s.paused?(s.play(),c.classList.add("playing")):(s.pause(),c.classList.remove("playing"));
 }
-
 function chooseSong(t){
   const audio=document.getElementById("song");
   const img=document.querySelector("#cover img");
   const name=document.querySelector(".song-name");
-
   if(t==="hug"){
     audio.src="song.mp3";
     img.src="music-cover.jpg";
@@ -180,6 +383,22 @@ function chooseSong(t){
   audio.load();
   go(3);
 }
+
+/* SLIDER */
+let idx=0;
+const slides=document.querySelectorAll(".slide");
+function nextSlide(){
+  slides[idx].classList.remove("active");
+  idx=(idx+1)%slides.length;
+  slides[idx].classList.add("active");
+}
+
+/* TAP */
+document.querySelectorAll(".tap-card").forEach(c=>c.onclick=()=>c.classList.add("revealed"));
+
+/* LETTER */
+function openLetter(){document.getElementById("letter").style.display="block"}
+function resetAll(){location.reload()}
 </script>
 
 </body>
