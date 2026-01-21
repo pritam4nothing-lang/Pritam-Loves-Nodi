@@ -327,7 +327,32 @@ button:disabled{background:#ffc0d4}
   70%{box-shadow:0 0 0 18px rgba(232,75,122,0)}
   100%{box-shadow:0 0 0 0 rgba(232,75,122,0)}
 }
-  
+/* HEART BURST EFFECT */
+.heart-burst{
+  position:fixed;
+  left:50%;
+  top:50%;
+  font-size:22px;
+  pointer-events:none;
+  animation:burst 0.9s ease-out forwards;
+  z-index:9999;
+}
+
+@keyframes burst{
+  from{
+    transform:translate(-50%,-50%) scale(0.6);
+    opacity:1;
+  }
+  to{
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(1.4);
+    opacity:0;
+  }
+}  
 </style>
 </head>
 
@@ -477,7 +502,7 @@ Your Pritam ❤️
 </p>
 
 <div style="text-align:center; margin-top:20px;">
-  <button onclick="resetAll()">⬅ Return to Start</button>
+  <button onclick="heartBurst(); resetAll();">⬅ Return to Start</button>
 </div>
 </section>
 
@@ -594,6 +619,22 @@ function resetAll(){
 
   // 6️⃣ Go back to start
   go(1);
+}
+function heartBurst(){
+  for(let i=0;i<16;i++){
+    const h=document.createElement("div");
+    h.className="heart-burst";
+    h.innerText="💖";
+
+    const x=(Math.random()*260-130)+"px";
+    const y=(Math.random()*260-130)+"px";
+
+    h.style.setProperty("--x",x);
+    h.style.setProperty("--y",y);
+
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),900);
+  }
 }
   
 </script>
