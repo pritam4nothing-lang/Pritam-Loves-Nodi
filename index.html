@@ -452,47 +452,49 @@ const images = [
   "c1.jpg","c2.jpg",
   "d1.jpg","d2.jpg"
 ];
-let first=null,lock=false,done=0;
-const grid=document.getElementById("grid");
-const gameNext=document.getElementById("gameNext");
-images.sort(()=>Math.random()-0.5).forEach(img=>{
-  const c=document.createElement("div");
-  c.className="card";
+
+let first = null, lock = false, done = 0;
+const grid = document.getElementById("grid");
+const gameNext = document.getElementById("gameNext");
+
+images.sort(() => Math.random() - 0.5).forEach(img => {
+  const c = document.createElement("div");
+  c.className = "card";
   c.dataset.img = img;
   c.textContent = "❓";
- c.onclick = () => {
-  if (lock || c.classList.contains("done") || c.innerHTML !== "❓") return;
 
-  // show image
-  c.innerHTML = `<img src="${c.dataset.img}" style="width:100%;height:100%;border-radius:10px;">`;
+  c.onclick = () => {
+    if (lock || c.classList.contains("done") || c.innerHTML !== "❓") return;
 
-  if (!first) {
-    first = c;
-  } else {
-    lock = true;
+    c.innerHTML = `<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
 
-    // match check (a1-a2, b1-b2 etc)
-    if (first.dataset.img[0] === c.dataset.img[0]) {
-      first.classList.add("done");
-      c.classList.add("done");
-      done += 2;
-
-      if (done === images.length) {
-        gameNext.disabled = false;
-      }
-
-      first = null;
-      lock = false;
+    if (!first) {
+      first = c;
     } else {
-      setTimeout(() => {
-        first.innerHTML = "❓";
-        c.innerHTML = "❓";
+      lock = true;
+
+      if (first.dataset.img[0] === c.dataset.img[0]) {
+        first.classList.add("done");
+        c.classList.add("done");
+        done += 2;
+
+        if (done === images.length) gameNext.disabled = false;
+
         first = null;
         lock = false;
-      }, 700);
+      } else {
+        setTimeout(() => {
+          first.innerHTML = "❓";
+          c.innerHTML = "❓";
+          first = null;
+          lock = false;
+        }, 700);
+      }
     }
-  }
-};
+  };
+
+  grid.appendChild(c);
+});                    
 
 /* MUSIC */
 function toggleSong(){
