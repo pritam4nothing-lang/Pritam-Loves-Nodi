@@ -257,13 +257,52 @@ function go(n){
   else document.getElementById("p"+n).classList.add("active");
 }
 
-const grid=document.getElementById("grid");
-["💗","🌊","💗","🌊","💖","✨","💖","✨"].sort(()=>.5-Math.random()).forEach(e=>{
-  const c=document.createElement("div");
-  c.className="card";c.textContent="❓";
-  c.onclick=()=>{c.textContent=e;c.classList.add("done")};
+/* GAME */
+const emojis = ["💗","🌊","💗","🌊","💖","✨","💖","✨"];
+let first = null, lock = false, done = 0;
+const grid = document.getElementById("grid");
+const gameNext = document.getElementById("gameNext");
+
+grid.innerHTML = "";
+emojis.sort(() => Math.random() - 0.5).forEach(e => {
+  const c = document.createElement("div");
+  c.className = "card";
+  c.textContent = "❓";
+
+  c.onclick = () => {
+    if (lock || c.classList.contains("done") || c.textContent !== "❓") return;
+
+    c.textContent = e;
+
+    if (!first) {
+      first = c;
+    } else {
+      lock = true;
+      if (first.textContent === c.textContent) {
+        first.classList.add("done");
+        c.classList.add("done");
+        done += 2;
+
+        if (done === emojis.length) {
+          gameNext.disabled = false;   // ✅ NOW NEXT WORKS
+        }
+
+        first = null;
+        lock = false;
+      } else {
+        setTimeout(() => {
+          first.textContent = "❓";
+          c.textContent = "❓";
+          first = null;
+          lock = false;
+        }, 700);
+      }
+    }
+  };
+
   grid.appendChild(c);
 });
+
 
 function toggleSong(){
   const s=document.getElementById("song"),b=document.getElementById("musicBtn"),c=document.getElementById("cover");
