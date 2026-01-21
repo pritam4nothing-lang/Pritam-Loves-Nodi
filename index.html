@@ -478,6 +478,23 @@ button:disabled{background:#ffc0d4}
 </section>
 
 <script>
+const preloadFiles = [
+  // game images
+  "a1.jpg","a2.jpg",
+  "b1.jpg","b2.jpg",
+  "c1.jpg","c2.jpg",
+  "d1.jpg","d2.jpg",
+
+  // slider images
+  "pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg",
+
+  // music covers
+  "music-cover.jpg","music-cover2.jpg",
+
+  // audio
+  "song.mp3","song2.mp3"
+];
+  
 /* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
@@ -590,35 +607,50 @@ function resetAll(){location.reload()}
   
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  const progress = document.querySelector(".loading-progress");
+  const progressBar = document.querySelector(".loading-progress");
 
-  let percent = 0;
+  let loaded = 0;
+  const total = preloadFiles.length;
 
-  const fakeLoad = setInterval(() => {
-    percent += 5;
-    progress.style.width = percent + "%";
+  function updateProgress() {
+    const percent = Math.floor((loaded / total) * 100);
+    progressBar.style.width = percent + "%";
 
-    if (percent >= 100) {
-      clearInterval(fakeLoad);
-
+    if (loaded === total) {
       setTimeout(() => {
         loader.style.opacity = "0";
-
         setTimeout(() => {
           loader.style.display = "none";
 
-          // 🔥 THIS IS THE FIX
           document.querySelectorAll("section").forEach(s =>
             s.classList.remove("active")
           );
           document.getElementById("p1").classList.add("active");
 
         }, 600);
-
       }, 400);
     }
-  }, 120);
+  }
+
+  preloadFiles.forEach(src => {
+    if (src.endsWith(".mp3")) {
+      const audio = new Audio();
+      audio.src = src;
+      audio.oncanplaythrough = () => {
+        loaded++;
+        updateProgress();
+      };
+    } else {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loaded++;
+        updateProgress();
+      };
+    }
+  });
 });
+
 
 </script>
 
