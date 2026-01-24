@@ -539,28 +539,13 @@ button:disabled{background:#ffc0d4}
 </section>
 
 <script>
+/* ---------------- GLOBAL DATA ---------------- */
 let selectedSet = "A";
+
 const imageSets = {
-  A: ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg"], // Lag Ja Gale
-  B: ["pic5.jpg", "pic6.jpg", "pic7.jpg", "pic8.jpg"]  // Zara Zara
+  A: ["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg"],
+  B: ["pic5.jpg","pic6.jpg","pic7.jpg","pic8.jpg"]
 };
-const preloadFiles = [
-  // game images
-  "a1.jpg","a2.jpg",
-  "b1.jpg","b2.jpg",
-  "c1.jpg","c2.jpg",
-  "d1.jpg","d2.jpg",
-
-  // slider images
-  "pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg",
-
-  // music covers
-  "music-cover.jpg","music-cover2.jpg",
-
-  // audio
-  "song.mp3","song2.mp3"
-];
- let selectedSet = "A";
 
 const whyContent = {
   A: [
@@ -575,225 +560,195 @@ const whyContent = {
     { title: "Your Voice 🎶", text: "Instant calm for my heart." },
     { title: "Your Smile ☀️", text: "Makes everything lighter." }
   ]
-}; 
-/* NAV */
+};
+
+const preloadFiles = [
+  "a1.jpg","a2.jpg","b1.jpg","b2.jpg","c1.jpg","c2.jpg","d1.jpg","d2.jpg",
+  "pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg",
+  "pic5.jpg","pic6.jpg","pic7.jpg","pic8.jpg",
+  "music-cover.jpg","music-cover2.jpg",
+  "song.mp3","song2.mp3"
+];
+
+/* ---------------- NAVIGATION ---------------- */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  if(n==="SongChoice")document.getElementById("pSongChoice").classList.add("active");
+  if(n==="SongChoice") document.getElementById("pSongChoice").classList.add("active");
   else document.getElementById("p"+n).classList.add("active");
 }
 
-/* HEARTS */
-const hc=document.getElementById("hearts");
+/* ---------------- FLOATING HEARTS ---------------- */
+const heartsBox = document.getElementById("hearts");
 setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.textContent="❤";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(14+Math.random()*16)+"px";
-  h.style.animationDuration=(6+Math.random()*6)+"s";
-  hc.appendChild(h);
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = "❤";
+  h.style.left = Math.random()*100+"vw";
+  h.style.fontSize = 14+Math.random()*16+"px";
+  h.style.animationDuration = 6+Math.random()*6+"s";
+  heartsBox.appendChild(h);
   setTimeout(()=>h.remove(),12000);
 },350);
 
-/* GAME */
-const images = [
-  "a1.jpg","a2.jpg",
-  "b1.jpg","b2.jpg",
-  "c1.jpg","c2.jpg",
-  "d1.jpg","d2.jpg"
-];
-
-let first = null, lock = false, done = 0;
+/* ---------------- MEMORY GAME ---------------- */
+const gameImages = ["a1.jpg","a2.jpg","b1.jpg","b2.jpg","c1.jpg","c2.jpg","d1.jpg","d2.jpg"];
 const grid = document.getElementById("grid");
 const gameNext = document.getElementById("gameNext");
+let first=null, lock=false, done=0;
 
-images.sort(() => Math.random() - 0.5).forEach(img => {
-  const c = document.createElement("div");
-  c.className = "card";
-  c.dataset.img = img;
-  c.textContent = "❓";
+function initGame(){
+  grid.innerHTML="";
+  done=0; first=null; lock=false;
+  gameNext.disabled=true;
 
-  c.onclick = () => {
-    if (lock || c.classList.contains("done") || c.innerHTML !== "❓") return;
+  gameImages.sort(()=>Math.random()-0.5).forEach(img=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.dataset.img=img;
+    c.textContent="❓";
 
-    c.innerHTML = `<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
+    c.onclick=()=>{
+      if(lock || c.classList.contains("done") || c.textContent!=="❓") return;
 
-    if (!first) {
-      first = c;
-    } else {
-      lock = true;
+      c.innerHTML=`<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
 
-      if (first.dataset.img[0] === c.dataset.img[0]) {
-        first.classList.add("done");
-        c.classList.add("done");
-        done += 2;
-
-        if (done === images.length) gameNext.disabled = false;
-
-        first = null;
-        lock = false;
-      } else {
-        setTimeout(() => {
-          first.innerHTML = "❓";
-          c.innerHTML = "❓";
-          first = null;
-          lock = false;
-        }, 700);
+      if(!first){ first=c; }
+      else{
+        lock=true;
+        if(first.dataset.img[0]===c.dataset.img[0]){
+          first.classList.add("done");
+          c.classList.add("done");
+          done+=2;
+          if(done===gameImages.length) gameNext.disabled=false;
+          first=null; lock=false;
+        }else{
+          setTimeout(()=>{
+            first.textContent="❓";
+            c.textContent="❓";
+            first=null; lock=false;
+          },700);
+        }
       }
-    }
-  };
-
-  grid.appendChild(c);
-});                    
-
-/* MUSIC */
-function toggleSong(){
-  const s=document.getElementById("song");
-  const c=document.getElementById("cover");
-  s.paused?(s.play(),c.classList.add("playing")):(s.pause(),c.classList.remove("playing"));
-}
-function chooseSong(t){
-  const audio = document.getElementById("song");
-  const img = document.querySelector("#cover img");
-  const name = document.querySelector(".song-name");
-
-  if(t === "hug"){
-    selectedSet = "A";              // Lag Ja Gale
-    audio.src = "song.mp3";
-    img.src = "music-cover.jpg";
-    name.textContent = "Lag Ja Gale";
-  } else {
-    selectedSet = "B";              // Zara Zara
-    audio.src = "song2.mp3";
-    img.src = "music-cover2.jpg";
-    name.textContent = "Zara Zara";
-  }
-
-  audio.load();
-  loadImageSet();
-  loadWhyContent();
-  loadSliderImages();
-  go(3); // go to image page
-}
-function loadImageSet() {
-  const slides = document.querySelectorAll("#slider .slide");
-  const imgs = imageSets[selectedSet];
-
-  slides.forEach((slide, i) => {
-    slide.src = imgs[i];
+    };
+    grid.appendChild(c);
   });
-
-  // reset slider position
-  slides.forEach(s => s.classList.remove("active"));
-  slides[0].classList.add("active");
-  idx = 0;
 }
-/* SLIDER */
+
+/* ---------------- MUSIC ---------------- */
+function toggleSong(){
+  const song=document.getElementById("song");
+  const cover=document.getElementById("cover");
+  if(song.paused){
+    song.play();
+    cover.classList.add("playing");
+  }else{
+    song.pause();
+    cover.classList.remove("playing");
+  }
+}
+
+function chooseSong(type){
+  const song=document.getElementById("song");
+  const img=document.querySelector("#cover img");
+  const name=document.querySelector(".song-name");
+
+  if(type==="hug"){
+    selectedSet="A";
+    song.src="song.mp3";
+    img.src="music-cover.jpg";
+    name.textContent="Lag Ja Gale";
+  }else{
+    selectedSet="B";
+    song.src="song2.mp3";
+    img.src="music-cover2.jpg";
+    name.textContent="Zara Zara";
+  }
+  song.load();
+  loadSlider();
+  loadWhy();
+  go(3);
+}
+
+/* ---------------- SLIDER ---------------- */
 let idx=0;
-const slides=document.querySelectorAll(".slide");
+function loadSlider(){
+  const slides=document.querySelectorAll("#slider img");
+  slides.forEach((img,i)=>{
+    img.src=imageSets[selectedSet][i];
+    img.classList.remove("active");
+  });
+  slides[0].classList.add("active");
+  idx=0;
+}
+
 function nextSlide(){
+  const slides=document.querySelectorAll("#slider img");
   slides[idx].classList.remove("active");
   idx=(idx+1)%slides.length;
   slides[idx].classList.add("active");
 }
-function loadSliderImages(){
-  const slides = document.querySelectorAll("#slider img");
 
-  slides.forEach((img, i) => {
-    img.src = imageSets[selectedSet][i];
-    img.classList.remove("active");
+/* Swipe support */
+let startX=0;
+const slider=document.getElementById("slider");
+if(slider){
+  slider.addEventListener("touchstart",e=>startX=e.changedTouches[0].screenX);
+  slider.addEventListener("touchend",e=>{
+    const endX=e.changedTouches[0].screenX;
+    if(Math.abs(startX-endX)>50) nextSlide();
   });
-
-  slides[0].classList.add("active");
-  idx = 0;
 }
-/* MOBILE SWIPE SUPPORT */
-const slider = document.getElementById("slider");
-let startX = 0;
-let endX = 0;
 
-if (slider) {
-  slider.addEventListener("touchstart", e => {
-    startX = e.changedTouches[0].screenX;
-  });
-
-  slider.addEventListener("touchend", e => {
-    endX = e.changedTouches[0].screenX;
-    handfunction handleSwipe(){
-  if (startX - endX > 50) {
-    nextSlide();
-  }
-  if (endX - startX > 50) {
-    nextSlide();
-  }
-}
-/* TAP */
-document.querySelectorAll(".tap-card").forEach(c=>c.onclick=()=>c.classList.add("revealed"));
-
-/* LETTER */
-function openLetter(){document.getElementById("letter").style.display="block"}
-function resetAll(){location.reload()}
-  
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const progressBar = document.querySelector(".loading-progress");
-
-  let loaded = 0;
-  const total = preloadFiles.length;
-
-  function updateProgress() {
-    const percent = Math.floor((loaded / total) * 100);
-    progressBar.style.width = percent + "%";
-
-    if (loaded === total) {
-      setTimeout(() => {
-        loader.style.opacity = "0";
-        setTimeout(() => {
-          loader.style.display = "none";
-
-          document.querySelectorAll("section").forEach(s =>
-            s.classList.remove("active")
-          );
-          document.getElementById("p1").classList.add("active");
-
-        }, 600);
-      }, 400);
-    }
-  }
-
-  preloadFiles.forEach(src => {
-    if (src.endsWith(".mp3")) {
-      const audio = new Audio();
-      audio.src = src;
-      audio.oncanplaythrough = () => {
-        loaded++;
-        updateProgress();
-      };
-    } else {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loaded++;
-        updateProgress();
-      };
-    }
-  });
-});
-function loadWhyContent(){
-  const cards = document.querySelectorAll("#p5 .matter-card");
-
-  cards.forEach((card, i) => {
-    const h3 = card.querySelector("h3");
-    const p  = card.querySelector("p");
-
-    h3.textContent = whyContent[selectedSet][i].title;
-    p.textContent  = whyContent[selectedSet][i].text;
-
+/* ---------------- WHY YOU MATTER ---------------- */
+function loadWhy(){
+  const cards=document.querySelectorAll("#p5 .matter-card");
+  cards.forEach((card,i)=>{
+    card.querySelector("h3").textContent=whyContent[selectedSet][i].title;
+    card.querySelector("p").textContent=whyContent[selectedSet][i].text;
     card.classList.remove("revealed");
   });
 }
 
+window.addEventListener("load",()=>{
+  document.querySelectorAll(".tap-card").forEach(c=>{
+    c.onclick=()=>c.classList.add("revealed");
+  });
+});
+
+/* ---------------- LETTER ---------------- */
+function openLetter(){
+  document.getElementById("letter").style.display="block";
+}
+function resetAll(){ location.reload(); }
+
+/* ---------------- LOADER ---------------- */
+window.addEventListener("load",()=>{
+  let loaded=0;
+  const bar=document.getElementById("loadingProgress");
+
+  function update(){
+    bar.style.width = Math.floor((loaded/preloadFiles.length)*100)+"%";
+    if(loaded===preloadFiles.length){
+      setTimeout(()=>{
+        document.getElementById("loader").style.display="none";
+        go(1);
+        initGame();
+      },800);
+    }
+  }
+
+  preloadFiles.forEach(src=>{
+    if(src.endsWith(".mp3")){
+      const a=new Audio();
+      a.src=src;
+      a.oncanplaythrough=()=>{loaded++;update();};
+    }else{
+      const i=new Image();
+      i.src=src;
+      i.onload=()=>{loaded++;update();};
+    }
+  });
+});
 </script>
 
 </body>
