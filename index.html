@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine for NODI 💗</title>
+<title>Valentine For NODI 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
@@ -13,16 +13,59 @@
 body{
   margin:0;
   min-height:100vh;
+  font-family:Arial,sans-serif;
+  text-align:center;
   background:
-    linear-gradient(rgba(255,240,245,.8),rgba(255,240,245,.8)),
+    linear-gradient(rgba(255,240,245,.85),rgba(255,240,245,.85)),
     url("bg.jpg");
   background-size:cover;
   background-position:center;
-  font-family:Arial, sans-serif;
-  text-align:center;
   overflow-x:hidden;
 }
 
+/* ================= LOADER ================= */
+#loader{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,240,245,.95),rgba(255,240,245,.95)),
+    url("bg.jpg");
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.loader-gif{width:120px;margin-bottom:20px}
+.loading-bar{
+  width:260px;height:12px;
+  background:#ffd6e5;
+  border-radius:10px;overflow:hidden
+}
+.loading-progress{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#ff5c8a,#ff9bb5);
+  transition:width .3s ease;
+}
+
+/* ================= HEARTS ================= */
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+.heart{
+  position:absolute;
+  color:rgba(255,92,138,.6);
+  animation:floatHeart linear infinite;
+}
+@keyframes floatHeart{
+  from{transform:translateY(110vh) scale(.8);opacity:1}
+  to{transform:translateY(-10vh) scale(1.4);opacity:0}
+}
+
+/* ================= SECTIONS ================= */
 section{
   display:none;
   min-height:100vh;
@@ -33,20 +76,13 @@ section{
 }
 section.active{display:flex}
 
+/* ================= TEXT ================= */
 h1{
   font-family:'Playfair Display',serif;
   color:#ff5c8a;
 }
 
-/* START */
-.start-card{
-  background:rgba(255,255,255,.85);
-  padding:35px;
-  border-radius:25px;
-  box-shadow:0 20px 40px rgba(255,92,138,.3);
-}
-
-/* BUTTON */
+/* ================= BUTTON ================= */
 button{
   padding:12px 28px;
   border:none;
@@ -59,106 +95,92 @@ button{
 }
 button:disabled{background:#ffc0d4}
 
-/* GAME */
+/* ================= GAME ================= */
 .grid{
   display:grid;
   grid-template-columns:repeat(4,70px);
   gap:12px;
   margin:25px auto;
-  justify-content:center;
 }
-
 .card{
-  width:70px;
-  height:70px;
+  width:70px;height:70px;
   perspective:800px;
-  cursor:pointer;
 }
-
 .card-inner{
-  width:100%;
-  height:100%;
+  width:100%;height:100%;
   position:relative;
   transform-style:preserve-3d;
   transition:.6s;
 }
-
 .card.flip .card-inner{transform:rotateY(180deg)}
-
-.card-front,
-.card-back{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.card-front,.card-back{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
   backface-visibility:hidden;
   border-radius:12px;
 }
-
-.card-front{
-  background:#ffb6c1;
-  font-size:28px;
-}
-
-.card-back{
-  transform:rotateY(180deg);
-  background:#fff;
-}
+.card-front{background:#ffb6c1;font-size:28px}
+.card-back{transform:rotateY(180deg);background:#fff}
 .card-back img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:10px;
+  width:100%;height:100%;
+  object-fit:cover;border-radius:10px;
 }
-
 .card.done{
   border:3px solid #ff5c8a;
   box-shadow:0 0 15px rgba(255,92,138,.6);
 }
 
-/* MUSIC */
+/* ================= MUSIC ================= */
 .music-card{
   background:rgba(255,255,255,.85);
   padding:25px;
   border-radius:25px;
-  width:260px;
+  width:280px;
 }
 .cover{
-  width:160px;
-  height:160px;
-  margin:auto;
+  width:160px;height:160px;
   border-radius:50%;
   overflow:hidden;
+  margin:auto;
 }
 .cover img{width:100%;height:100%;object-fit:cover}
 
-/* LETTER */
-.envelope{
-  width:280px;
-  height:180px;
-  background:#ffd1dc;
+/* ================= WHY YOU ================= */
+.matter-wrap{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  max-width:420px;
+}
+.matter-card{
+  background:rgba(255,255,255,.85);
+  padding:22px;
   border-radius:18px;
-  position:relative;
+}
+
+/* ================= LETTER ================= */
+.envelope{
+  width:300px;height:200px;
+  background:#ffd1dc;
+  border-radius:20px;
   cursor:pointer;
 }
 .stamp{
-  position:absolute;
-  inset:0;
+  height:100%;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   font-family:'Dancing Script',cursive;
-  font-size:22px;
+  font-size:24px;
 }
-
 .letter{
   display:none;
-  max-width:640px;
+  max-width:680px;
   background:white;
   padding:40px;
   border-radius:25px;
   margin-top:30px;
+  text-align:left;
   box-shadow:0 25px 50px rgba(0,0,0,.25);
 }
 </style>
@@ -166,45 +188,53 @@ button:disabled{background:#ffc0d4}
 
 <body>
 
-<section id="p1" class="active">
-  <div class="start-card">
-    <h1>Happy Valentine’s Day NODI 💖</h1>
-    <p>I made something special for you</p>
-    <button onclick="go(2)">Open 💌</button>
+<div id="loader">
+  <img src="loader.gif" class="loader-gif">
+  <p>Loading love for you, NODI 💖</p>
+  <div class="loading-bar">
+    <div class="loading-progress" id="progress"></div>
   </div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<section id="p1" class="active">
+  <h1>Happy Valentine’s Day NODI 💕</h1>
+  <button onclick="go(2)">Open 💌</button>
 </section>
 
 <section id="p2">
-  <h1>Valentine Memory Match 💕</h1>
+  <h1>Memory Match 💖</h1>
   <div class="grid" id="grid"></div>
   <button id="gameNext" disabled onclick="go(3)">Next 🎵</button>
 </section>
 
 <section id="p3">
-  <h1>A Song That Hugs Your Heart 🎶</h1>
-  <div class="music-card">
-    <div class="cover">
-      <img src="music-cover.jpg">
-    </div>
-    <audio id="song" src="song.mp3"></audio>
-    <button onclick="toggleSong()">Play / Pause</button>
-  </div>
-  <button onclick="go(4)">Next 💫</button>
+  <h1>Choose a Song 🎶</h1>
+  <button onclick="chooseSong(1)">Lag Ja Gale 💞</button>
+  <button onclick="chooseSong(2)">Zara Zara 💋</button>
 </section>
 
 <section id="p4">
+  <h1>Why Are You Special 💖</h1>
+  <div class="matter-wrap">
+    <div class="matter-card">Your kindness 🌸</div>
+    <div class="matter-card">Your calm presence 💫</div>
+    <div class="matter-card">Your smile 😊</div>
+    <div class="matter-card">Just YOU 💗</div>
+  </div>
+  <button onclick="go(5)">Next 💌</button>
+</section>
+
+<section id="p5">
   <h1>A Valentine Note 💌</h1>
   <div class="envelope" onclick="openLetter()">
     <div class="stamp">Read Me 💖</div>
   </div>
-
   <div class="letter" id="letter">
-    <h3>Hey NODI 💗</h3>
+    <h2>Hey NODI 💗</h2>
     <p>
-      This is our Valentine’s Day together.  
-      Even with distance, you are always close to my heart.
-    </p>
-    <p>
+      Distance may exist, but love never fades.
       Thank you for choosing me every single day.
     </p>
     <p style="text-align:right;color:#ff5c8a">
@@ -213,46 +243,62 @@ button:disabled{background:#ffc0d4}
   </div>
 </section>
 
+<audio id="song"></audio>
+
 <script>
+/* LOADER */
+let prog=0;
+const bar=document.getElementById("progress");
+const loadInt=setInterval(()=>{
+  prog+=10;
+  bar.style.width=prog+"%";
+  if(prog>=100){
+    clearInterval(loadInt);
+    document.getElementById("loader").style.display="none";
+  }
+},200);
+
+/* HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=14+Math.random()*20+"px";
+  h.style.animationDuration=5+Math.random()*5+"s";
+  document.getElementById("hearts").appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},400);
+
+/* NAV */
 function go(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("p"+n).classList.add("active");
 }
 
 /* GAME */
-const images=[
-"a1.jpg","a2.jpg",
-"b1.jpg","b2.jpg",
-"c1.jpg","c2.jpg",
-"d1.jpg","d2.jpg"
-];
-
+const imgs=["a1.jpg","a2.jpg","b1.jpg","b2.jpg","c1.jpg","c2.jpg","d1.jpg","d2.jpg"];
 let first=null,lock=false,done=0;
-const grid=document.getElementById("grid");
-const gameNext=document.getElementById("gameNext");
-
-images.sort(()=>Math.random()-0.5);
-
-images.forEach(img=>{
+imgs.sort(()=>Math.random()-0.5);
+imgs.forEach(img=>{
   const c=document.createElement("div");
   c.className="card";
-  c.dataset.img=img;
-  c.innerHTML=`
-    <div class="card-inner">
-      <div class="card-front">❓</div>
-      <div class="card-back"><img src="${img}"></div>
-    </div>`;
+  c.dataset.i=img[0];
+  c.innerHTML=`<div class="card-inner">
+    <div class="card-front">?</div>
+    <div class="card-back"><img src="${img}"></div>
+  </div>`;
   c.onclick=()=>{
     if(lock||c.classList.contains("flip")||c.classList.contains("done"))return;
     c.classList.add("flip");
-    if(!first) first=c;
+    if(!first){first=c}
     else{
       lock=true;
-      if(first.dataset.img[0]===c.dataset.img[0]){
+      if(first.dataset.i===c.dataset.i){
         first.classList.add("done");
         c.classList.add("done");
         done+=2;
-        if(done===images.length)gameNext.disabled=false;
+        if(done===imgs.length)gameNext.disabled=false;
         first=null;lock=false;
       }else{
         setTimeout(()=>{
@@ -267,9 +313,11 @@ images.forEach(img=>{
 });
 
 /* MUSIC */
-function toggleSong(){
+function chooseSong(n){
   const s=document.getElementById("song");
-  s.paused?s.play():s.pause();
+  s.src=n===1?"song1.mp3":"song2.mp3";
+  s.play();
+  go(4);
 }
 
 /* LETTER */
