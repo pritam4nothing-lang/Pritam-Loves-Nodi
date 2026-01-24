@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Valentine For NODI 💖</title>
+<title>A Valentine For Nodi 💗</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
 
@@ -11,28 +11,60 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:'Playfair Display',serif;
+  font-family:Arial,sans-serif;
   background:
     linear-gradient(rgba(255,240,245,.85),rgba(255,240,245,.85)),
     url("bg.jpg");
   background-size:cover;
-  background-position:center;
-  min-height:100vh;
-  overflow-x:hidden;
+  background-attachment:fixed;
   text-align:center;
+  overflow-x:hidden;
 }
 
-/* HEARTS */
-.hearts{position:fixed;inset:0;pointer-events:none;z-index:0}
+/* FLOATING HEARTS */
+.hearts{position:fixed;inset:0;pointer-events:none;z-index:1}
 .heart{
   position:absolute;
   color:rgba(255,92,138,.6);
-  animation:float 8s linear infinite;
+  animation:float 10s linear infinite;
 }
 @keyframes float{
-  from{transform:translateY(-10vh);opacity:0}
-  20%{opacity:1}
-  to{transform:translateY(110vh);opacity:0}
+  0%{transform:translateY(110vh);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* LOADER */
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:
+    linear-gradient(rgba(255,240,245,.95),rgba(255,240,245,.95)),
+    url("bg.jpg");
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+#loader img{width:120px;margin-bottom:20px}
+#loader p{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+  margin-bottom:20px;
+}
+.bar{
+  width:260px;height:12px;
+  background:#ffe0ec;
+  border-radius:10px;
+  overflow:hidden;
+}
+.bar span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff5c8a,#ff8fb1);
+  transition:.3s;
 }
 
 /* SECTIONS */
@@ -40,73 +72,336 @@ section{
   display:none;
   min-height:100vh;
   padding:40px 20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  position:relative;
+  z-index:2;
 }
 section.active{display:flex}
 
-/* LOADER */
-#loader{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,240,245,.95),rgba(255,240,245,.95)),
-    url("bg.jpg");
-  background-size:cover;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#loader p{
-  font-family:'Dancing Script',cursive;
-  font-size:22px;
-  color:#ff5c8a;
-  margin:20px 0;
-}
-.loading-bar{
-  width:260px;height:12px;
-  background:#ffe0ec;
-  border-radius:10px;
-  overflow:hidden;
-}
-.loading-progress{
-  width:0;height:100%;
-  background:linear-gradient(90deg,#ff5c8a,#ff8fb1);
-  transition:.3s;
-}
-
-/* START CARD */
+/* START */
 .start-card{
-  background:rgba(255,255,255,.8);
-  padding:40px;
+  background:rgba(255,255,255,.9);
+  padding:45px 35px;
   border-radius:30px;
-  box-shadow:0 25px 60px rgba(255,92,138,.25);
+  box-shadow:0 25px 60px rgba(255,92,138,.3);
 }
-h1{color:#ff5c8a;margin-bottom:20px}
+h1{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+  font-size:38px;
+}
+.subtitle{color:#777;margin:15px 0 25px}
+
 button{
-  padding:14px 28px;
+  padding:12px 26px;
   border:none;
-  border-radius:30px;
+  border-radius:25px;
   background:#ff5c8a;
   color:white;
   font-size:16px;
   cursor:pointer;
-  margin:10px;
 }
 
 /* GAME */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,70px);
+  grid-template-columns:repeat(4,75px);
   gap:12px;
   margin:30px 0;
 }
 .card{
-  width:70px;height:70px;
+  width:75px;height:75px;
+  background:#ffd6e5;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  cursor:pointer;
+  transition:transform .4s;
+}
+.card.flip{transform:rotateY(180deg)}
+.card img{width:100%;height:100%;border-radius:12px}
+.card.done{
+  border:3px solid #ff5c8a;
+  box-shadow:0 0 15px rgba(255,92,138,.6);
+}
+
+/* MUSIC */
+.music-card{
+  background:rgba(255,255,255,.9);
+  padding:30px;
+  border-radius:30px;
+  width:280px;
+}
+.cover{
+  width:180px;height:180px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 6px #ffd6e5;
+}
+.cover.playing{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SLIDER */
+.slider{
+  width:260px;height:340px;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:.6s;
+}
+.slide.active{opacity:1}
+
+/* WHY SPECIAL */
+.matter-wrap{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  max-width:420px;
+}
+.tap-card{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  position:relative;
+  cursor:pointer;
+}
+.card-cover{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#ff5c8a,#ff8fb1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Dancing Script',cursive;
+  color:white;
+}
+.card-content{opacity:0}
+.tap-card.revealed .card-cover{opacity:0}
+.tap-card.revealed .card-content{opacity:1}
+
+/* LETTER */
+.envelope{
+  width:280px;height:180px;
+  background:#ffd1e1;
+  border-radius:16px;
+  position:relative;
+}
+.stamp{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90px;height:90px;
+  border-radius:50%;
+  background:#ff5c8a;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Dancing Script',cursive;
+}
+.letter{
+  display:none;
+  max-width:650px;
+  background:white;
+  padding:40px;
+  border-radius:25px;
+  margin-top:30px;
+  text-align:left;
+  font-family:'Dancing Script',cursive;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <img src="loader.gif">
+  <p>Loading love for you, Nodi 💗</p>
+  <div class="bar"><span id="progress"></span></div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<section id="p1" class="active">
+  <div class="start-card">
+    <h1>Happy Valentine’s Day Nodi 💖</h1>
+    <p class="subtitle">I made something special for you</p>
+    <button onclick="go(2)">Open 💗</button>
+  </div>
+</section>
+
+<section id="p2">
+  <h1>Valentine Memory Match 💞</h1>
+  <div class="grid" id="grid"></div>
+  <button id="gameNext" disabled onclick="go(3)">Next 🎶</button>
+</section>
+
+<section id="p3">
+  <h1>Choose 💗</h1>
+  <button onclick="chooseSong(1)">If you want to hug me 🤗</button>
+  <button onclick="chooseSong(2)">If you want to kiss me 💋</button>
+</section>
+
+<section id="p4">
+  <h1>A Song For You 🎵</h1>
+  <div class="music-card">
+    <div class="cover" id="cover"><img id="coverImg"></div>
+    <p id="songName"></p>
+    <audio id="song"></audio>
+    <button onclick="toggleSong()">Play / Pause</button>
+  </div>
+  <button onclick="go(5)">Next ✨</button>
+</section>
+
+<section id="p5">
+  <h1>Moments 💗</h1>
+  <div class="slider" id="slider">
+    <img src="pic1.jpg" class="slide active">
+    <img src="pic2.jpg" class="slide">
+    <img src="pic3.jpg" class="slide">
+    <img src="pic4.jpg" class="slide">
+  </div>
+  <button onclick="nextSlide()">Swipe ➡</button>
+  <button onclick="go(6)">Next 💌</button>
+</section>
+
+<section id="p6">
+  <h1>Why Are You So Special 💗</h1>
+  <div class="matter-wrap">
+    <div class="tap-card"><div class="card-cover">Tap 💝</div><div class="card-content">Genuine Heart</div></div>
+    <div class="tap-card"><div class="card-cover">Tap 💝</div><div class="card-content">Calm Presence</div></div>
+    <div class="tap-card"><div class="card-cover">Tap 💝</div><div class="card-content">Kind Nature</div></div>
+    <div class="tap-card"><div class="card-cover">Tap 💝</div><div class="card-content">Just You</div></div>
+  </div>
+  <button onclick="go(7)">Next 💌</button>
+</section>
+
+<section id="p7">
+  <h1>A Valentine Note 💌</h1>
+  <div class="envelope">
+    <div class="stamp" onclick="document.getElementById('letter').style.display='block'">Read Me 💗</div>
+  </div>
+  <div class="letter" id="letter">
+    <p>— FULL LONG LETTER GOES HERE —</p>
+    <p style="text-align:right">Your Pritam ❤️</p>
+  </div>
+</section>
+
+<script>
+/* HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(14+Math.random()*18)+"px";
+  document.getElementById("hearts").appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},400);
+
+/* NAV */
+function go(n){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("p"+n).classList.add("active");
+}
+
+/* LOADER PRELOAD */
+const files=[
+ "a1.jpg","a2.jpg","b1.jpg","b2.jpg","c1.jpg","c2.jpg","d1.jpg","d2.jpg",
+ "pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg",
+ "music-cover.jpg","music-cover2.jpg","song.mp3","song2.mp3"
+];
+let loaded=0;
+files.forEach(f=>{
+  if(f.endsWith(".mp3")){
+    const a=new Audio();a.src=f;
+    a.oncanplaythrough=done;
+  }else{
+    const i=new Image();i.src=f;
+    i.onload=done;
+  }
+});
+function done(){
+  loaded++;
+  document.getElementById("progress").style.width=(loaded/files.length*100)+"%";
+  if(loaded===files.length){
+    setTimeout(()=>document.getElementById("loader").style.display="none",500);
+  }
+}
+
+/* GAME */
+const imgs=["a1","a2","b1","b2","c1","c2","d1","d2"];
+let first=null,lock=false,doneCount=0;
+imgs.sort(()=>Math.random()-0.5).forEach(i=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.textContent="❓";
+  c.onclick=()=>{
+    if(lock||c.classList.contains("done"))return;
+    c.innerHTML=`<img src="${i}.jpg">`;
+    if(!first)first=c;
+    else{
+      lock=true;
+      if(first.innerHTML===c.innerHTML){
+        first.classList.add("done");
+        c.classList.add("done");
+        doneCount+=2;
+        if(doneCount===8)document.getElementById("gameNext").disabled=false;
+        lock=false;first=null;
+      }else{
+        setTimeout(()=>{
+          first.textContent="❓";
+          c.textContent="❓";
+          lock=false;first=null;
+        },700);
+      }
+    }
+  };
+  grid.appendChild(c);
+});
+
+/* SONG */
+function chooseSong(t){
+  const s=document.getElementById("song");
+  const i=document.getElementById("coverImg");
+  const n=document.getElementById("songName");
+  if(t===1){s.src="song.mp3";i.src="music-cover.jpg";n.textContent="Lag Jaa Gale";}
+  else{s.src="song2.mp3";i.src="music-cover2.jpg";n.textContent="Zara Zara";}
+  go(4);
+}
+function toggleSong(){
+  const s=document.getElementById("song");
+  const c=document.getElementById("cover");
+  s.paused?(s.play(),c.classList.add("playing")):(s.pause(),c.classList.remove("playing"));
+}
+
+/* SLIDER */
+let idx=0;
+function nextSlide(){
+  const slides=document.querySelectorAll(".slide");
+  slides[idx].classList.remove("active");
+  idx=(idx+1)%slides.length;
+  slides[idx].classList.add("active");
+}
+
+/* TAP */
+document.querySelectorAll(".tap-card").forEach(c=>c.onclick=()=>c.classList.add("revealed"));
+</script>
+
+</body>
+  </html>  width:70px;height:70px;
   perspective:800px;
 }
 .card-inner{
