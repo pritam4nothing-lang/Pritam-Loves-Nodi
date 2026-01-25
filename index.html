@@ -391,7 +391,9 @@ button:disabled{background:#ffc0d4}
   width: 110px;
   opacity: 0.85;
   z-index: 5;
-  pointer-events: none;
+  pointer-events: auto;      /* 👈 none থাকলে tap issue হয় */
+  touch-action: none;        /* 👈 movement বন্ধ */
+  user-select: none;         /* 👈 drag highlight বন্ধ */
 }
 /* HEART / KISS BURST EFFECT */
 .burst {
@@ -621,6 +623,7 @@ function createBurst(x, y, emoji, count = 16) {
 let lastTapTime = 0;
 
 function handleStickerTap(e) {
+  e.preventDefault();
   const now = Date.now();
   const tapGap = now - lastTapTime;
   lastTapTime = now;
