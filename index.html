@@ -386,6 +386,13 @@ button:disabled{background:#ffc0d4}
   justify-content:center;
   margin-top:30px;
 }
+.page-gif{
+  position: fixed;
+  width: 90px;
+  opacity: 0.85;
+  z-index: 5;
+  pointer-events: none;
+}
 </style>
 </head>
 
@@ -409,6 +416,9 @@ button:disabled{background:#ffc0d4}
     <p class="subtitle">I made something special for you</p>
     <button onclick="go(2)">Open 💗</button>
   </div>
+  <img src="kitty_intro.gif"
+     class="page-gif"
+     style="bottom:20px; right:20px;">
 </section>
 
 <!-- PAGE 2 GAME -->
@@ -416,6 +426,9 @@ button:disabled{background:#ffc0d4}
   <h1>Valentine Memory Match 💞</h1>
   <div class="grid" id="grid"></div>
   <button id="gameNext" disabled onclick="go('SongChoice')">Next 🎶</button>
+  <img src="dog_play.gif"
+     class="page-gif"
+     style="bottom:20px; left:20px;">
 </section>
 
 <!-- SONG CHOICE -->
@@ -437,6 +450,9 @@ button:disabled{background:#ffc0d4}
     <button onclick="toggleSong()">▶ Play</button>
   </div>
   <button onclick="go(4)">Next 💖</button>
+  <img src="sakura_branch.gif"
+     class="page-gif"
+     style="top:18px; left:12px;">
 </section>
 
 <!-- PHOTOS -->
@@ -450,6 +466,9 @@ button:disabled{background:#ffc0d4}
   </div>
   <button onclick="nextSlide()">Swipe ➡</button>
   <button onclick="go(5)">Next ✨</button>
+  <img src="sakura_branch.gif"
+     class="page-gif"
+     style="top:18px; right:12px;">
 </section>
 
 <!-- WHY YOU MATTER -->
@@ -495,6 +514,9 @@ button:disabled{background:#ffc0d4}
     Next 💌
   </button>
   </div>
+    <img src="heart_feelings.gif"
+     class="page-gif"
+     style="bottom:24px; right:20px;">
 </section>
 
 <!-- LETTER -->
@@ -535,7 +557,9 @@ button:disabled{background:#ffc0d4}
 
   <button onclick="resetAll()">⬅ Return to Start</button>
 </div>
-
+<img src="bunny_letter.gif"
+     class="page-gif"
+     style="bottom:20px; left:20px;">
 </section>
 
 <script>
