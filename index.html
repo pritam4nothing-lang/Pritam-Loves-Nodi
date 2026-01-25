@@ -595,7 +595,7 @@ const kissSound = new Audio("kiss_pop.mp3");
 loveSound.volume = 0.7;
 kissSound.volume = 0.7;
 /* -------- BURST EFFECT -------- */
-function createBurst(x, y, emoji, count = 8) {
+function createBurst(x, y, emoji, count = 16) {
   const burst = document.createElement("div");
   burst.className = "burst";
   burst.style.left = x + "px";
@@ -606,7 +606,7 @@ function createBurst(x, y, emoji, count = 8) {
     span.textContent = emoji;
 
     const angle = Math.random() * Math.PI * 2;
-    const distance = 40 + Math.random() * 30;
+    const distance = 70 + Math.random() * 60;
 
     span.style.setProperty("--x", Math.cos(angle) * distance + "px");
     span.style.setProperty("--y", Math.sin(angle) * distance + "px");
@@ -615,7 +615,7 @@ function createBurst(x, y, emoji, count = 8) {
   }
 
   document.body.appendChild(burst);
-  setTimeout(() => burst.remove(), 1000);
+  setTimeout(() => burst.remove(), 1400);
 }
 /* -------- STICKER TAP INTERACTION -------- */
 let lastTapTime = 0;
