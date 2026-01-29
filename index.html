@@ -13,7 +13,7 @@
 /* BACKGROUND */
 body{
   margin:0;
-  min-height:100vh;
+  height:100vh;
   font-family:Arial,sans-serif;
   text-align:center;
   background:
@@ -22,7 +22,7 @@ body{
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
-  overflow-x:hidden;
+  overflow: hidden;   /* 🔴 SCROLL OFF */
 }
 
 /* FLOATING HEARTS */
@@ -46,7 +46,7 @@ body{
 /* SECTIONS */
 section{
   display:none;
-  min-height:100vh;
+  height:100vh;
   padding:40px 20px;
   justify-content:center;
   align-items:center;
@@ -736,7 +736,8 @@ function go(n){
   if(n==="SongChoice") document.getElementById("pSongChoice").classList.add("active");
   else document.getElementById("p"+n).classList.add("active");
 }
-
+ window.scrollTo(0,0); // 
+}
 /* ---------------- FLOATING HEARTS ---------------- */
 const heartsBox = document.getElementById("hearts");
 setInterval(()=>{
