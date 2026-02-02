@@ -47,10 +47,11 @@ body{
 section{
   display:none;
   height:100vh;
-  padding:40px 20px;
-  justify-content:center;
-  align-items:center;
+  padding:20px;
   flex-direction:column;
+  justify-content:flex-start;   
+  align-items:center;
+  overflow:hidden;              
 }
 section.active{display:flex}
 
@@ -286,9 +287,10 @@ button:disabled{background:#ffc0d4}
   margin-top:20px;
   box-shadow:0 25px 50px rgba(0,0,0,.25);
 
-  max-height:65vh;        /* 🔥 main fix */
-  overflow-y:auto;        /* 🔥 scroll enable */
+  max-height:70vh;              
+  overflow-y:auto;
   -webkit-overflow-scrolling: touch;
+}
 }
 
 .letter h3{
