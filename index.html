@@ -277,7 +277,7 @@ button:disabled{background:#ffc0d4}
   box-shadow:0 10px 25px rgba(230,59,111,.6);
   z-index:5;
 }
-/* LETTER – SIZE & READABILITY (CONTENT UNCHANGED) */
+/*  – SIZE & READABILITY (CONTENT UNCHANGED) */
 .letter{
   display:none;
   max-width:640px;
@@ -291,13 +291,22 @@ button:disabled{background:#ffc0d4}
   overflow-y:auto;
   padding-bottom:90px;
 }
-.letter button{
-  position: sticky;
-  bottom: 20px;
-  display: block;
-  margin: 30px auto 0;
-  z-index: 10;
+.letter-footer{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin:20px 0 40px;
 }
+
+.letter-footer button{
+  padding:14px 28px;
+  border-radius:30px;
+  background:#ff5c8a;
+  color:#fff;
+  font-size:16px;
+  border:none;
+}
+  
 .letter h3{
   font-family:'Dancing Script',cursive;
   color:#ff5c8a;
@@ -639,6 +648,7 @@ button:disabled{background:#ffc0d4}
     Your Pritam ❤️
   </p>
 
+<div class="letter-footer">
   <button onclick="resetAll()">⬅ Return to Start</button>
 </div>
 <img src="bunny_letter.gif"
