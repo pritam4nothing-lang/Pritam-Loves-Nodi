@@ -496,11 +496,11 @@ button:disabled{background:#ffc0d4}
   <h1 class="song-title">Play the Song 💗</h1>
 
   <div class="choice-buttons">
-    <button class="choice-btn" onclick="alert('HUG CLICKED')">
+   <button class="choice-btn" onclick="chooseSong('hug')">
   If you want to hug me 🤗
 </button>
 
-<button class="choice-btn" onclick="alert('KISS CLICKED')">
+<button class="choice-btn" onclick="chooseSong('kiss')">
   If you want to kiss me 💋
 </button>
   </div>
@@ -793,10 +793,8 @@ function initGame(){
 
 /* ---------------- MUSIC ---------------- */
 function chooseSong(type){
-  alert("Song chosen: " + type); // 👈 TEMP DEBUG
-
-  const song = document.getElementById("song");
-  const img  = document.querySelector("#cover img");
+  const song = document.getElementById("song"); // ⭐ THIS WAS MISSING
+  const img = document.querySelector("#cover img");
   const name = document.querySelector(".song-name");
 
   if(type === "hug"){
@@ -812,27 +810,10 @@ function chooseSong(type){
   }
 
   song.load();
-  go(3);
-}
-function chooseSong(type){
-  const song = document.getElementById("song");   // ✅ THIS WAS MISSING
-  const img  = document.querySelector("#cover img");
-  const name = document.querySelector(".song-name");
-
-  if(type === "hug"){
-    selectedSet = "A";
-    song.src = "song.mp3";
-    img.src = "music-cover.jpg";
-    name.textContent = "Lag Ja Gale";
-  } else {
-    selectedSet = "B";
-    song.src = "song2.mp3";
-    img.src = "music-cover2.jpg";
-    name.textContent = "Zara Zara";
-  }
-
-  song.load();
-  go(3);
+  loadSlider();
+  loadWhy();
+  updateWhyHeading();
+  go(3); // 👉 MUSIC PAGE
 }
 
 /* ---------------- SLIDER ---------------- */
