@@ -815,8 +815,8 @@ function chooseSong(type){
   go(3);
 }
 function chooseSong(type){
-  const song = document.getElementById("song");
-  const img = document.querySelector("#cover img");
+  const song = document.getElementById("song");   // ✅ THIS WAS MISSING
+  const img  = document.querySelector("#cover img");
   const name = document.querySelector(".song-name");
 
   if(type === "hug"){
@@ -832,9 +832,6 @@ function chooseSong(type){
   }
 
   song.load();
-  loadSlider();
-  loadWhy();
-  updateWhyHeading();
   go(3);
 }
 
