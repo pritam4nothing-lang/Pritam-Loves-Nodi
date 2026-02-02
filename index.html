@@ -834,16 +834,16 @@ c.onclick = () => {
       first = null;
       lock = false;
     } else {
-      // ❌ WRONG
-      setTimeout(() => {
-        wrongSound.currentTime = 0;
-        wrongSound.play();
+     // ❌ WRONG — sound instantly
+wrongSound.currentTime = 0;
+wrongSound.play();
 
-        first.textContent = "❓";
-        c.textContent = "❓";
-        first = null;
-        lock = false;
-      }, 700);
+setTimeout(() => {
+  first.textContent = "❓";
+  c.textContent = "❓";
+  first = null;
+  lock = false;
+}, 700);
     }
   }
 };
