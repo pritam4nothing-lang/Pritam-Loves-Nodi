@@ -723,13 +723,20 @@ const preloadFiles = [
 /* ---------------- NAVIGATION ---------------- */
 function go(n){
   document.querySelectorAll("section").forEach(s=>{
+    s.style.display = "none";
     s.classList.remove("active");
   });
 
+  let target;
   if(n === "SongChoice"){
-    document.getElementById("pSongChoice").classList.add("active");
-  } else {
-    document.getElementById("p"+n).classList.add("active");
+    target = document.getElementById("pSongChoice");
+  }else{
+    target = document.getElementById("p"+n);
+  }
+
+  if(target){
+    target.style.display = "flex";
+    target.classList.add("active");
   }
 
   window.scrollTo(0,0);
@@ -793,7 +800,9 @@ function initGame(){
 
 /* ---------------- MUSIC ---------------- */
 function chooseSong(type){
-  const song = document.getElementById("song"); // ⭐ THIS WAS MISSING
+  alert("Button clicked: " + type); // 👈 TEMP
+
+  const song = document.getElementById("song");
   const img = document.querySelector("#cover img");
   const name = document.querySelector(".song-name");
 
@@ -813,7 +822,7 @@ function chooseSong(type){
   loadSlider();
   loadWhy();
   updateWhyHeading();
-  go(3); // 👉 MUSIC PAGE
+  go(3);
 }
 
 /* ---------------- SLIDER ---------------- */
