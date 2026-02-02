@@ -657,6 +657,15 @@ button:disabled{background:#ffc0d4}
 </section>
 
 <script>
+// 🎵 MEMORY GAME SOUNDS
+const tapSound = new Audio("tap.mp3");
+const matchSound = new Audio("match.mp3");
+const wrongSound = new Audio("wrong.mp3");
+
+tapSound.volume = 0.7;
+matchSound.volume = 0.8;
+wrongSound.volume = 0.6;
+
 /* ---------------- GLOBAL DATA ---------------- */
 let selectedSet = "A";
 /* -------- STICKER SOUNDS -------- */
@@ -795,29 +804,49 @@ function initGame(){
     c.dataset.img=img;
     c.textContent="❓";
 
-    c.onclick=()=>{
-      if(lock || c.classList.contains("done") || c.textContent!=="❓") return;
+    c.onclick = () => {
+  if (lock || c.classList.contains("done") || c.textContent !== "?") return;
 
-      c.innerHTML=`<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
+  // 🔊 TAP SOUND
+  tapSound.currentTime = 0;
+  tapSound.play();
 
-      if(!first){ first=c; }
-      else{
-        lock=true;
-        if(first.dataset.img[0]===c.dataset.img[0]){
-          first.classList.add("done");
-          c.classList.add("done");
-          done+=2;
-          if(done===gameImages.length) gameNext.disabled=false;
-          first=null; lock=false;
-        }else{
-          setTimeout(()=>{
-            first.textContent="❓";
-            c.textContent="❓";
-            first=null; lock=false;
-          },700);
-        }
-      }
-    };
+  c.innerHTML = `<img src="${img}" style="width:100%;height:100%;border-radius:10px;">`;
+
+  if (!first) {
+    first = c;
+  } else {
+    lock = true;
+
+    if (first.dataset.img[0] === c.dataset.img[0]) {
+      // ✅ MATCH SOUND
+      setTimeout(() => {
+        matchSound.currentTime = 0;
+        matchSound.play();
+      }, 150);
+
+      first.classList.add("done");
+      c.classList.add("done");
+      done += 2;
+
+      if (done === gameImages.length) gameNext.disabled = false;
+
+      first = null;
+      lock = false;
+    } else {
+      // ❌ WRONG SOUND
+      setTimeout(() => {
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+
+        first.textContent = "?";
+        c.textContent = "?";
+        first = null;
+        lock = false;
+      }, 700);
+    }
+  }
+};
     grid.appendChild(c);
   });
 }
