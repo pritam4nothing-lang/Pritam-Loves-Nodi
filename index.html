@@ -419,48 +419,38 @@ button:disabled{background:#ffc0d4}
 /* SONG CHOICE PAGE */
 
 
-.song-title{
-  font-family:'Playfair Display',serif;
-  color:#ff5c8a;
-  font-size:36px;
-  margin-bottom:30px;
-  text-align:center;
-}
-
 .song-choice{
-  min-height:100vh;
+  height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:24px;
+  gap:20px;
+}
+
+.song-title{
+  font-family:'Playfair Display',serif;
+  color:#ff5c8a;
+  font-size:32px;
 }
 
 .choice-buttons{
   display:flex;
   gap:16px;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
 }
 
 .choice-btn{
-  padding:14px 22px;
-  border:none;
-  border-radius:28px;
+  padding:14px 24px;
+  border-radius:30px;
   background:#ff5c8a;
-  color:white;
-  font-size:15px;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(255,92,138,.35);
-  white-space:nowrap;
+  color:#fff;
+  font-size:16px;
+  border:none;
 }
 
 .choice-bear{
   width:180px;
-  max-width:70vw;
-  display:block;
-  margin:0 auto;
+  margin-top:10px;
 }
 
 </style>
@@ -506,16 +496,16 @@ button:disabled{background:#ffc0d4}
   <h1 class="song-title">Play the Song 💗</h1>
 
   <div class="choice-buttons">
-   <button class="choice-btn" onclick="chooseSong('hug')">
-      If you want to hug me 🤗
+    <button class="choice-btn" onclick="chooseSong('hug')">
+      Hug 🤗
     </button>
 
     <button class="choice-btn" onclick="chooseSong('kiss')">
-      If you want to kiss me 💋
+      Kiss 💋
     </button>
   </div>
 
-  <img src="bear_choice.png" class="choice-bear">
+  <img src="bear_choice.png" class="choice-bear" alt="Bear">
 </section>
 
 <!-- MUSIC -->
@@ -732,7 +722,9 @@ const preloadFiles = [
 
 /* ---------------- NAVIGATION ---------------- */
 function go(n){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll("section").forEach(s=>{
+    s.classList.remove("active");
+  });
 
   if(n === "SongChoice"){
     document.getElementById("pSongChoice").classList.add("active");
@@ -742,7 +734,6 @@ function go(n){
 
   window.scrollTo(0,0);
 }
-
 /* ---------------- FLOATING HEARTS ---------------- */
 const heartsBox = document.getElementById("hearts");
 setInterval(()=>{
@@ -801,16 +792,27 @@ function initGame(){
 }
 
 /* ---------------- MUSIC ---------------- */
-function toggleSong(){
-  const song=document.getElementById("song");
-  const cover=document.getElementById("cover");
-  if(song.paused){
-    song.play();
-    cover.classList.add("playing");
-  }else{
-    song.pause();
-    cover.classList.remove("playing");
+function chooseSong(type){
+  alert("Song chosen: " + type); // 👈 TEMP DEBUG
+
+  const song = document.getElementById("song");
+  const img  = document.querySelector("#cover img");
+  const name = document.querySelector(".song-name");
+
+  if(type === "hug"){
+    selectedSet = "A";
+    song.src = "song.mp3";
+    img.src = "music-cover.jpg";
+    name.textContent = "Lag Ja Gale";
+  } else {
+    selectedSet = "B";
+    song.src = "song2.mp3";
+    img.src = "music-cover2.jpg";
+    name.textContent = "Zara Zara";
   }
+
+  song.load();
+  go(3);
 }
 function chooseSong(type){
   const song = document.getElementById("song");
