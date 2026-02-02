@@ -804,8 +804,8 @@ function initGame(){
     c.dataset.img=img;
     c.textContent="❓";
 
-    c.onclick = () => {
-  if (lock || c.classList.contains("done") || c.textContent !== "?") return;
+c.onclick = () => {
+  if (lock || c.classList.contains("done") || c.textContent !== "❓") return;
 
   // 🔊 TAP SOUND
   tapSound.currentTime = 0;
@@ -819,11 +819,11 @@ function initGame(){
     lock = true;
 
     if (first.dataset.img[0] === c.dataset.img[0]) {
-      // ✅ MATCH SOUND
+      // ✅ MATCH
       setTimeout(() => {
         matchSound.currentTime = 0;
         matchSound.play();
-      }, 150);
+      }, 120);
 
       first.classList.add("done");
       c.classList.add("done");
@@ -834,13 +834,13 @@ function initGame(){
       first = null;
       lock = false;
     } else {
-      // ❌ WRONG SOUND
+      // ❌ WRONG
       setTimeout(() => {
         wrongSound.currentTime = 0;
         wrongSound.play();
 
-        first.textContent = "?";
-        c.textContent = "?";
+        first.textContent = "❓";
+        c.textContent = "❓";
         first = null;
         lock = false;
       }, 700);
