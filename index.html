@@ -1100,6 +1100,7 @@ c.appendChild(cachedImg);
              go(1);
              preloadGameImages();
              initGame();
+             buildJigsaw();
            },800);
          }
        }
@@ -1151,6 +1152,31 @@ c.appendChild(cachedImg);
      document.querySelectorAll(".page-gif").forEach(sticker => {
        sticker.addEventListener("click", handleStickerTap);
      });
+    /* ===============================
+   STEP 1: BUILD JIGSAW PIECES
+   =============================== */
+
+const jigsawBoard = document.getElementById("jigsawBoard");
+
+function buildJigsaw() {
+  const rows = 6;
+  const cols = 5;
+
+  jigsawBoard.innerHTML = "";
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const piece = document.createElement("div");
+      piece.className = "puzzle-piece";
+
+      piece.style.backgroundImage = "url('jigsaw.jpg')";
+      piece.style.backgroundPosition =
+        `${(c / (cols - 1)) * 100}% ${(r / (rows - 1)) * 100}%`;
+
+      jigsawBoard.appendChild(piece);
+    }
+  }
+}
 </script>
 
 </body>
