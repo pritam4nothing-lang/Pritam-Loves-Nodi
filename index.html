@@ -475,95 +475,8 @@
         .center-page{
           justify-content: center !important;
         }
-     /* ===============================
-   SAFE JIGSAW PUZZLE (VISUAL ONLY)
-   =============================== */
 
-.puzzle-wrap{
-  width:300px;
-  margin:20px auto;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-/* MAIN BOARD */
-.puzzle-board{
-  width:300px;
-  height:360px;
-  background:#fff;
-  border-radius:26px;
-  padding:0;              /* 🔴 padding off */
-  box-shadow:0 20px 40px rgba(255,92,138,.25);
-
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  grid-template-rows:repeat(6,1fr);
-  gap:0;
-}
-/* PUZZLE PIECE */
-.puzzle-piece{
-  background-size:500% 600%;
-  background-repeat:no-repeat;
-  cursor:grab;
-  margin:-2px;
-  border-radius:6px;
-  position:relative;
-  box-shadow:
-    0 6px 12px rgba(0,0,0,.15);
-
-  transition:transform .15s ease;
-}
-
-.puzzle-piece:active{
-  cursor:grabbing;
-  transform:scale(1.05);
-  z-index:5;
-}
-
-/* FAKE JIGSAW BUMPS (SAFE) */
-.puzzle-piece::before,
-.puzzle-piece::after{
-  content:"";
-  position:absolute;
-  width:18px;
-  height:18px;
-  background:inherit;
-  border-radius:50%;
-}
-
-.puzzle-piece::before{
-  top:-6px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.puzzle-piece::after{
-  bottom:-6px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-/* TRAY */
-.puzzle-tray{
-  width:300px;
-  min-height:80px;
-  padding:12px;
-  border-radius:20px;
-  background:rgba(255,255,255,.75);
-  box-shadow:0 14px 30px rgba(255,92,138,.2);
-
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  justify-content:center;
-}
-
-/* DISABLED NEXT BUTTON FEEL */
-#puzzleNextBtn:disabled{
-  opacity:.5;
-}   
-   </style>
+    </style>
 </head>
 
 <body>
@@ -595,40 +508,12 @@
 <section id="p2" class="center-page">
     <h1>Valentine Memory Match 💞</h1>
     <div class="grid" id="grid"></div>
-    <button id="gameNext" disabled onclick="go('Puzzle')">Next 🎶</button>
+    <button id="gameNext" disabled onclick="go('SongChoice')">Next 🎶</button>
     <img src="dog_play.gif"
          class="page-gif"
          style="bottom:20px; left:20px;">
 </section>
-    
-<!-- JIGSAW PUZZLE PAGE -->
-<section id="pJigsaw" class="center-page">
 
-  <h1 class="jigsaw-title">
-    Solve this to get your Valentine’s Gift 💝
-  </h1>
-
-  <div class="puzzle-wrap">
-    <div class="puzzle-board" id="jigsawBoard">
-      <!-- puzzle pieces JS দিয়ে আসবে -->
-    </div>
-  </div>
-
-  <img src="duck.gif" class="jigsaw-duck">
-
-  <div id="jigsawSpeech"
-       style="display:none;
-              margin-top:10px;
-              background:white;
-              padding:10px 14px;
-              border-radius:14px;
-              font-size:14px;
-              box-shadow:0 6px 18px rgba(0,0,0,0.15);">
-    Yay! It’s coming 🐥💝
-  </div>
-
-</section>
-    
 <!-- SONG CHOICE -->
 <section id="pSongChoice" class="song-choice center-page">
     <h1 class="song-title">Play the Song 💗</h1>
@@ -877,31 +762,26 @@
      ];
 
      /* ---------------- NAVIGATION ---------------- */
-    function go(n){
-  document.querySelectorAll("section").forEach(s=>{
-    s.style.display = "none";
-    s.classList.remove("active");
-  });
+     function go(n){
+       document.querySelectorAll("section").forEach(s=>{
+         s.style.display = "none";
+         s.classList.remove("active");
+       });
 
-  let target;
+       let target;
+       if(n === "SongChoice"){
+         target = document.getElementById("pSongChoice");
+       }else{
+         target = document.getElementById("p"+n);
+       }
 
-  if(n === "SongChoice"){
-    target = document.getElementById("pSongChoice");
-  }
-  else if(n === "Puzzle"){
-    target = document.getElementById("pJigsaw");
-  }
-  else{
-    target = document.getElementById("p"+n);
-  }
+       if(target){
+         target.style.display = "flex";
+         target.classList.add("active");
+       }
 
-  if(target){
-    target.style.display = "flex";
-    target.classList.add("active");
-  }
-
-  window.scrollTo(0,0);
-}
+       window.scrollTo(0,0);
+     }
      /* ---------------- FLOATING HEARTS ---------------- */
      const heartsBox = document.getElementById("hearts");
      setInterval(()=>{
@@ -1098,7 +978,6 @@ c.appendChild(cachedImg);
              go(1);
              preloadGameImages();
              initGame();
-             buildJigsaw();
            },800);
          }
        }
@@ -1150,31 +1029,6 @@ c.appendChild(cachedImg);
      document.querySelectorAll(".page-gif").forEach(sticker => {
        sticker.addEventListener("click", handleStickerTap);
      });
-    /* ===============================
-   STEP 1: BUILD JIGSAW PIECES
-   =============================== */
-
-const jigsawBoard = document.getElementById("jigsawBoard");
-
-function buildJigsaw() {
-  const rows = 6;
-  const cols = 5;
-
-  jigsawBoard.innerHTML = "";
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const piece = document.createElement("div");
-      piece.className = "puzzle-piece";
-
-      piece.style.backgroundImage = "url('jigsaw.jpg')";
-      piece.style.backgroundPosition =
-        `${(c / (cols - 1)) * 100}% ${(r / (rows - 1)) * 100}%`;
-
-      jigsawBoard.appendChild(piece);
-    }
-  }
-}
 </script>
 
 </body>
