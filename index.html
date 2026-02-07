@@ -603,27 +603,31 @@
          style="bottom:20px; left:20px;">
 </section>
     
-<!-- NEW PUZZLE PAGE -->
-<section id="pPuzzle" class="center-page">
+<!-- JIGSAW PUZZLE PAGE -->
+<section id="pJigsaw" class="center-page">
 
-  <h1>One last thing before the surprise 💝</h1>
-  <p class="subtitle">Complete this to unlock your gift</p>
+  <h1 class="jigsaw-title">
+    Solve this to get your Valentine’s Gift 💝
+  </h1>
 
-  <div style="
-    width:300px;
-    height:360px;
-    background:rgba(255,255,255,.85);
-    border-radius:22px;
-    box-shadow:0 20px 40px rgba(255,92,138,.25);
-    margin-top:20px;
-  ">
-   <div class="puzzle-wrap">
-  <div class="puzzle-board" id="puzzleBoardUI"></div>
-
-  <div class="puzzle-tray" id="puzzleTrayUI"></div>
+  <div class="jigsaw-wrapper">
+    <div class="jigsaw-board" id="jigsawBoard">
+      <!-- puzzle pieces JS দিয়ে আসবে -->
+    </div>
   </div>
 
-  <button disabled id="puzzleNextBtn">Next 🎶</button>
+  <img src="duck.gif" class="jigsaw-duck">
+
+  <div id="jigsawSpeech"
+       style="display:none;
+              margin-top:10px;
+              background:white;
+              padding:10px 14px;
+              border-radius:14px;
+              font-size:14px;
+              box-shadow:0 6px 18px rgba(0,0,0,0.15);">
+    Yay! It’s coming 🐥💝
+  </div>
 
 </section>
     
