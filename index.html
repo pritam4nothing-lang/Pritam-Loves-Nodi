@@ -499,7 +499,7 @@
   display:grid;
   grid-template-columns:repeat(5,1fr);
   grid-template-rows:repeat(6,1fr);
-  gap:6px;
+  gap:0;
 }
 
 /* PUZZLE PIECE */
@@ -507,8 +507,8 @@
   background-size:500% 600%;
   background-repeat:no-repeat;
   cursor:grab;
-
-  border-radius:18px;
+  margin:-1px
+  border-radius:8px;
   position:relative;
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.6),
@@ -528,8 +528,8 @@
 .puzzle-piece::after{
   content:"";
   position:absolute;
-  width:14px;
-  height:14px;
+  width:18px;
+  height:18px;
   background:inherit;
   border-radius:50%;
 }
