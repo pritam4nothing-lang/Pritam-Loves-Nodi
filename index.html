@@ -475,7 +475,12 @@
         .center-page{
           justify-content: center !important;
         }
-
+#puzzleCanvas{
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(255,92,138,.25);
+  touch-action:none;
+}
     </style>
 </head>
 
@@ -513,7 +518,18 @@
          class="page-gif"
          style="bottom:20px; left:20px;">
 </section>
+    
+<section id="pJigsaw" class="center-page">
 
+  <h1>Solve this to get your Valentine’s Gift 💝</h1>
+
+  <canvas id="puzzleCanvas" width="300" height="360"></canvas>
+
+  <button id="puzzleDoneBtn" disabled onclick="go('SongChoice')">
+    Continue 💗
+  </button>
+
+</section>
 <!-- SONG CHOICE -->
 <section id="pSongChoice" class="song-choice center-page">
     <h1 class="song-title">Play the Song 💗</h1>
@@ -1029,6 +1045,116 @@ c.appendChild(cachedImg);
      document.querySelectorAll(".page-gif").forEach(sticker => {
        sticker.addEventListener("click", handleStickerTap);
      });
+    
+    /* =========================
+   CANVAS PUZZLE (SAFE)
+   ========================= */
+
+const canvas = document.getElementById("puzzleCanvas");
+const ctx = canvas.getContext("2d");
+
+const ROWS = 6;
+const COLS = 5;
+
+const img = new Image();
+img.src = "jigsaw.jpg";
+
+let pieces = [];
+let dragging = null;
+let offsetX = 0;
+let offsetY = 0;
+
+img.onload = () => {
+  initPuzzle();
+  draw();
+};
+
+function initPuzzle(){
+  pieces = [];
+  const pw = canvas.width / COLS;
+  const ph = canvas.height / ROWS;
+
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      pieces.push({
+        sx: c * pw,
+        sy: r * ph,
+        x: Math.random()*(canvas.width-pw),
+        y: canvas.height + 20 + Math.random()*120,
+        w: pw,
+        h: ph,
+        row:r,
+        col:c,
+        locked:false
+      });
+    }
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  pieces.forEach(p=>{
+    ctx.drawImage(
+      img,
+      p.sx, p.sy, p.w, p.h,
+      p.x, p.y, p.w, p.h
+    );
+  });
+
+  requestAnimationFrame(draw);
+}
+
+canvas.addEventListener("pointerdown", e=>{
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  for(let i=pieces.length-1;i>=0;i--){
+    const p = pieces[i];
+    if(!p.locked &&
+       x>p.x && x<p.x+p.w &&
+       y>p.y && y<p.y+p.h){
+      dragging = p;
+      offsetX = x - p.x;
+      offsetY = y - p.y;
+      break;
+    }
+  }
+});
+
+canvas.addEventListener("pointermove", e=>{
+  if(!dragging) return;
+  const rect = canvas.getBoundingClientRect();
+  dragging.x = e.clientX - rect.left - offsetX;
+  dragging.y = e.clientY - rect.top - offsetY;
+});
+
+canvas.addEventListener("pointerup", ()=>{
+  if(!dragging) return;
+
+  const pw = canvas.width / COLS;
+  const ph = canvas.height / ROWS;
+
+  const snapX = dragging.col * pw;
+  const snapY = dragging.row * ph;
+
+  if(Math.abs(dragging.x - snapX) < 15 &&
+     Math.abs(dragging.y - snapY) < 15){
+    dragging.x = snapX;
+    dragging.y = snapY;
+    dragging.locked = true;
+    checkComplete();
+  }
+
+  dragging = null;
+});
+
+function checkComplete(){
+  if(pieces.every(p=>p.locked)){
+    document.getElementById("puzzleDoneBtn").disabled = false;
+  }
+}
 </script>
 
 </body>
