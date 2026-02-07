@@ -475,7 +475,78 @@
         .center-page{
           justify-content: center !important;
         }
+/* ===============================
+   PUZZLE GAME (ISOLATED CSS)
+   =============================== */
 
+.puzzle-wrap{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+}
+
+/* MAIN BOARD (5x6 = 30 slots) */
+.puzzle-board{
+  width:260px;
+  height:300px;
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  grid-template-rows:repeat(6, 1fr);
+  gap:2px;
+  background:#ffd6e5;
+  border-radius:16px;
+  padding:4px;
+  box-shadow:inset 0 0 12px rgba(255,92,138,.25);
+}
+
+/* EMPTY BOARD SLOT */
+.puzzle-board .slot{
+  background:rgba(255,255,255,.55);
+  border-radius:6px;
+}
+
+/* PUZZLE TRAY */
+.puzzle-tray{
+  width:260px;
+  min-height:80px;
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  align-items:center;
+  padding:8px;
+  background:rgba(255,255,255,.7);
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(255,92,138,.25);
+}
+
+/* PUZZLE PIECE */
+.puzzle-piece{
+  width:48px;
+  height:48px;
+  background-size:260px 300px;
+  background-repeat:no-repeat;
+  border-radius:6px;
+  cursor:grab;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.puzzle-piece:active{
+  cursor:grabbing;
+  transform:scale(1.05);
+}
+
+/* WHEN PLACED CORRECTLY */
+.puzzle-piece.locked{
+  cursor:default;
+  box-shadow:none;
+  transform:none;
+}
     </style>
 </head>
 
@@ -528,7 +599,10 @@
     box-shadow:0 20px 40px rgba(255,92,138,.25);
     margin-top:20px;
   ">
-    <!-- puzzle will come here later -->
+   <div class="puzzle-wrap">
+  <div class="puzzle-board" id="puzzleBoardUI"></div>
+
+  <div class="puzzle-tray" id="puzzleTrayUI"></div>
   </div>
 
   <button disabled id="puzzleNextBtn">Next 🎶</button>
