@@ -783,28 +783,30 @@
      ];
 
      /* ---------------- NAVIGATION ---------------- */
-     function go(n){
-       document.querySelectorAll("section").forEach(s=>{
-         s.style.display = "none";
-         s.classList.remove("active");
-       });
+    function go(n){
+  document.querySelectorAll("section").forEach(s=>{
+    s.style.display = "none";
+    s.classList.remove("active");
+  });
 
-       let target;
-       if(n === "SongChoice"){
-         target = document.getElementById("pSongChoice");
-       }else{
-         target = document.getElementById("p"+n);
-       }
+  let target;
 
-       if(target){
-         target.style.display = "flex";
-         target.classList.add("active");
-       }
+  if(n === "SongChoice"){
+    target = document.getElementById("pSongChoice");
+  }
+  else if(n === "Puzzle"){
+    target = document.getElementById("pPuzzle");
+  }
+  else{
+    target = document.getElementById("p"+n);
+  }
 
-       window.scrollTo(0,0);
-     }
-    if(n === "Puzzle"){
-  target = document.getElementById("pPuzzle");
+  if(target){
+    target.style.display = "flex";
+    target.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
 }
      /* ---------------- FLOATING HEARTS ---------------- */
      const heartsBox = document.getElementById("hearts");
